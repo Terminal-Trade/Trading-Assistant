@@ -1,37 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About - Neural Network Portfolio</title>
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Neural Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav id="navbar">
+  <!-- Фон-анимация -->
+  <canvas id="neural-bg"></canvas>
+
+  <!-- Навигация -->
+  <nav id="navbar">
     <div class="nav-container">
-        <a href="./index.html" class="logo-container">NEURAL</a>
-        <div class="nav-menu" id="nav-menu">
-            <ul>
-                <li><a href="./index.html">HOME</a></li>
-                <li><a href="./about.html" class="active">ABOUT</a></li>
-                <li><a href="./projects.html">PROJECTS</a></li>
-                <li><a href="./skills.html">SKILLS</a></li>
-                <li><a href="./contact.html">CONTACT</a></li>
-            </ul>
+      <a href="index.html" class="logo-container">
+        <span class="logo-text">Neural</span>
+      </a>
+      <div id="nav-menu" class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+        </ul>
+      </div>
+      <div id="mobile-toggle" class="mobile-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-container">
+      <div class="about-image">
+        <div class="profile-img-wrapper">
+          <img src="images/avatar.jpg" alt="Profile" class="profile-img">
         </div>
+      </div>
+      <div class="about-content">
+        <h3>Hello, I’m Developer</h3>
+        <p>
+          This is the about section. Add biography, skills and your story here.
+        </p>
+      </div>
     </div>
-</nav>
+  </section>
 
-<section class="fade-in">
-    <h2>About Me</h2>
-    <p>I'm a passionate web developer specializing in cutting-edge digital experiences...</p>
-</section>
-
-<footer>
+  <!-- Футер -->
+  <footer>
     <div class="footer-content">
-        <p>&copy; 2025 Neural Network Portfolio</p>
+      <div class="footer-section">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+        </ul>
+      </div>
     </div>
-</footer>
-<script src="./main.js" defer></script>
+    <div class="footer-bottom">© 2025 Neural Portfolio</div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

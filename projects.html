@@ -1,83 +1,66 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Neural Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - Neural Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <canvas id="neural-bg"></canvas>
+  <!-- Фон-анимация -->
+  <canvas id="neural-bg"></canvas>
 
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo-container">
-                <div class="logo-svg"></div>
-                <div class="logo-text">NEURAL</div>
-            </a>
-            <div id="mobile-toggle" class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul id="nav-menu" class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+  <!-- Навигация -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-container">
+        <span class="logo-text">Neural</span>
+      </a>
+      <div id="nav-menu" class="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html" class="active">Projects</a></li>
+        </ul>
+      </div>
+      <div id="mobile-toggle" class="mobile-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2 class="section-title">My Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Project One</h3>
+          <p>Short description about this project. Add more details here.</p>
         </div>
-    </nav>
-
-    <main id="page-content">
-        <!-- Projects Hero -->
-        <section class="hero fade-in">
-            <div class="hero-content">
-                <h1 class="glitch" data-text="My Projects">My Projects</h1>
-                <div class="subtitle">A selection of my best works</div>
-            </div>
-        </section>
-
-        <!-- Projects Grid -->
-        <section>
-            <div class="projects-grid fade-in">
-                <div class="project-card glass-card">
-                    <h3>Project One</h3>
-                    <p>A visually striking interactive website using modern animation techniques.</p>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Project Two</h3>
-                    <p>Dynamic web experience with a focus on UX and responsive design.</p>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Project Three</h3>
-                    <p>Creative portfolio project combining 3D graphics and UI interactions.</p>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Project Four</h3>
-                    <p>Interactive landing page with neural network inspired animations.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="projects.html" class="active">Projects</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
+      </div>
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Project Two</h3>
+          <p>Short description about this project. Add more details here.</p>
         </div>
-        <div class="footer-bottom">
-            &copy; 2025 Neural Portfolio. Все права защищены.
-        </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="main.js" defer></script>
+  <!-- Футер -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html" class="active">Projects</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Neural Portfolio</div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

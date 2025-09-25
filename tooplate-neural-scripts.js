@@ -109,7 +109,7 @@
             });
         });
 
-        // Smooth scroll
+        /* // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -119,7 +119,7 @@
                 }
             });
         });
-
+        */
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');

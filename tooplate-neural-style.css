@@ -82,6 +82,11 @@ https://www.tooplate.com/view/2139-neural-portfolio
             border-bottom: 1px solid rgba(0, 255, 255, 0.2);
         }
 
+        .nav-menu a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
         nav.scrolled {
             padding: 10px 50px;
             background: rgba(10, 10, 10, 0.98);
