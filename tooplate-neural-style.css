@@ -235,7 +235,7 @@ https://www.tooplate.com/view/2139-neural-portfolio
             z-index: 10;
             animation: fadeInUp 1s ease;
             position: relative;
-            margin-top: -70px; /* Поднимаем блок выше */
+            margin-top: -90px; /* Поднимаем блок выше */
         }
 
         .glitch {
