@@ -1,55 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Neural Network Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
-    <link href="tooplate-neural-style.css" rel="stylesheet">
+    <title>Projects - Neural Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="neural-bg"></canvas>
 
-    <!-- Навигация -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-container">NEURAL</a>
-            <div class="nav-menu" id="nav-menu">
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="projects.html">PROJECTS</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
+            <a href="index.html" class="logo-container">
+                <div class="logo-svg"></div>
+                <div class="logo-text">NEURAL</div>
+            </a>
+            <div id="mobile-toggle" class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Контент страницы Projects -->
-    <section id="projects" class="fade-in">
-        <h2 class="section-title">PROJECTS</h2>
-        <div class="projects-grid">
-            <div class="glass-card project-card">
-                <h3 style="color: var(--primary);">AI Dashboard</h3>
-                <p>Real-time analytics with neural network visualizations</p>
+    <main id="page-content">
+        <!-- Projects Hero -->
+        <section class="hero fade-in">
+            <div class="hero-content">
+                <h1 class="glitch" data-text="My Projects">My Projects</h1>
+                <div class="subtitle">A selection of my best works</div>
             </div>
-            <div class="glass-card project-card">
-                <h3 style="color: var(--secondary);">Quantum UI</h3>
-                <p>Experimental interface system inspired by quantum principles</p>
-            </div>
-            <!-- Добавь остальные проекты -->
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <!-- Projects Grid -->
+        <section>
+            <div class="projects-grid fade-in">
+                <div class="project-card glass-card">
+                    <h3>Project One</h3>
+                    <p>A visually striking interactive website using modern animation techniques.</p>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Project Two</h3>
+                    <p>Dynamic web experience with a focus on UX and responsive design.</p>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Project Three</h3>
+                    <p>Creative portfolio project combining 3D graphics and UI interactions.</p>
+                </div>
+                <div class="project-card glass-card">
+                    <h3>Project Four</h3>
+                    <p>Interactive landing page with neural network inspired animations.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
         <div class="footer-content">
-            <p>&copy; 2048 Neural Network Portfolio. All rights reserved.</p>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 Neural Portfolio. Все права защищены.
         </div>
     </footer>
 
-    <script src="tooplate-neural-scripts.js"></script>
+    <script src="main.js" defer></script>
 </body>
 </html>
