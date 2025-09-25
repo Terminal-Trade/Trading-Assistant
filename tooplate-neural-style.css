@@ -405,6 +405,18 @@ https://www.tooplate.com/view/2139-neural-portfolio
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             box-shadow: 0 0 10px var(--primary);
         }
+		
+		.stat-card-link {
+            display: block;
+            text-decoration: none; /* убираем подчеркивание */
+            color: inherit; /* сохраняем цвет текста внутри блока */
+}
+
+        .stat-card-link .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
 
         /* Glass Cards */
         .glass-card {
