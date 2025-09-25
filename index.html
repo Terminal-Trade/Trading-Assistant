@@ -1,71 +1,48 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Network Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
+<link href="./style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Canvas для анимации -->
-    <canvas id="neural-bg"></canvas>
+<canvas id="neural-bg"></canvas>
 
-    <!-- Навигация -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo-container">
-                <div class="logo-svg"></div>
-                <div class="logo-text">NEURAL</div>
-            </a>
-            <div id="mobile-toggle" class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul id="nav-menu" class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="./index.html" class="logo-container">
+            <span class="logo-text">NEURAL</span>
+        </a>
+        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./projects.html">PROJECTS</a></li>
+                <li><a href="./skills.html">SKILLS</a></li>
+                <li><a href="./contact.html">CONTACT</a></li>
             </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Контент страниц -->
-    <main id="page-content">
-        <section class="hero fade-in">
-            <div class="hero-content">
-                <h1 class="glitch" data-text="Neural Portfolio">Neural Portfolio</h1>
-                <div class="subtitle">Creative Digital Experience</div>
-                <div class="scroll-btn">
-                    <div class="scroll-btn-inner">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-                            <path d="M12 5v14m7-7H5" stroke="currentColor"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="glitch" data-text="NEURAL NETWORK">NEURAL NETWORK</h1>
+        <p class="subtitle">Web Developer & Digital Architect</p>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2025 Neural Portfolio. Все права защищены.
-        </div>
-    </footer>
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2025 Neural Network Portfolio</p>
+    </div>
+</footer>
 
-    <script src="main.js" defer></script>
+<script src="./main.js" defer></script>
 </body>
 </html>
