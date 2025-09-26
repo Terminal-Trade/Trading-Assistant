@@ -1,3 +1,5 @@
+const SERVER_URL = 'https://cb-9.onrender.com';
+
 console.log("Trading Terminal loaded");
 
 // Получаем кнопки и блок для сообщений
@@ -10,8 +12,8 @@ buttons.forEach(button => {
     messageDiv.textContent = 'Creating checkout...';
 
     try {
-      // Создаём checkout на сервере
-      const res = await fetch('/create-checkout', {
+      // Создаём checkout на сервере Render
+      const res = await fetch(`${SERVER_URL}/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product })
@@ -26,12 +28,12 @@ buttons.forEach(button => {
         // Проверяем каждые 3 секунды, доступен ли файл
         const checkDownload = setInterval(async () => {
           try {
-            const dlRes = await fetch(`/download/${product}`);
+            const dlRes = await fetch(`${SERVER_URL}/download/${product}`);
             const dlData = await dlRes.json();
 
             // Если сервер вернул файл
-            if (dlData.file) {
-              messageDiv.innerHTML = `Payment confirmed! Download your file: <a href="${dlData.file}" target="_blank">${dlData.file}</a>`;
+            if (dlData.fileUrl) {  // Обрати внимание: server возвращает fileUrl
+              messageDiv.innerHTML = `Payment confirmed! Download your file: <a href="${dlData.fileUrl}" target="_blank">${dlData.fileUrl}</a>`;
               clearInterval(checkDownload);
 
               // Закрываем окно оплаты автоматически, если ещё открыто

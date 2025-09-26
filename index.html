@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Terminal</title>
+
+  <!-- Основные стили -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="neural.css">
+
+</head>
+<body>
+
+  <h1>Trading Terminal</h1>
+
+  <!-- Блок сообщений -->
+  <div id="message"></div>
+
+  <!-- Кнопки покупки -->
+  <button class="buyBtn" data-product="product1">Buy Product 1</button>
+  <button class="buyBtn" data-product="product2">Buy Product 2</button>
+  <button class="buyBtn" data-product="product3">Buy Product 3</button>
+
+  <!-- Canvas для портфолио/анимации -->
+  <canvas id="neural-bg"></canvas>
+
+  <!-- Скрипты -->
+  <script src="portfolio.js"></script>
+  <script src="buy.js"></script>
+  <script>
+    // Подключаем сервер Render
+    const SERVER_URL = 'https://cb-9.onrender.com';
+
+    const buttons = document.querySelectorAll('.buyBtn');
+    const messageDiv = document.getElementById('message');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const product = button.getAttribute('data-product');
+        messageDiv.textContent = 'Creating checkout...';
+
+        try {
+          // Создаём checkout на сервере Render
+          const res = await fetch(`${SERVER_URL}/create-checkout`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ product })
+          });
+
+          const data = await res.json();
+          if (data.checkoutUrl) {
+            const win = window.open(data.checkoutUrl, '_blank');
+            messageDiv.textContent = 'Checkout opened. Complete the payment.';
+
+            // Проверяем каждые 3 секунды, доступен ли файл
+            const checkDownload = setInterval(async () => {
+              try {
+                const dlRes = await fetch(`${SERVER_URL}/download/${product}`);
+                const dlData = await dlRes.json();
+
+                if (dlData.fileUrl) {
+                  messageDiv.innerHTML = `Payment confirmed! Download your file: <a href="${dlData.fileUrl}" target="_blank">${dlData.fileUrl}</a>`;
+                  clearInterval(checkDownload);
+                  if (win && !win.closed) win.close();
+                }
+              } catch (err) {
+                console.error('Error checking download:', err);
+              }
+            }, 3000);
+
+          } else {
+            messageDiv.textContent = 'Failed to create checkout.';
+            console.error(data);
+          }
+        } catch (err) {
+          console.error('Error creating checkout:', err);
+          messageDiv.textContent = 'Error creating checkout.';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
