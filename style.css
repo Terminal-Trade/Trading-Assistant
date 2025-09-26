@@ -18,21 +18,25 @@ button.buyBtn {
   padding: 12px 25px;
   font-size: 16px;
   cursor: pointer;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  border: none;              
+  background: linear-gradient(90deg, #00ffff, #ff00ff); /* градиент */
+  color: #000;               
+  border-radius: 8px;        
+  box-shadow: none;          
+  transition: all 0.3s ease;
 }
 
 button.buyBtn:hover {
-  background-color: #45a049;
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
 /* Блок сообщений (где выводим статус оплаты/скачивания) */
 #message {
   margin-top: 20px;
   font-weight: bold;
+  font-size: 16px;
+  color: #333;
 }
 
 /* Секция с ссылкой для скачивания */
