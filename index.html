@@ -1,85 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trading Terminal</title>
-
-  <!-- Основные стили -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="neural.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
+    <link href="tooplate-neural-style.css" rel="stylesheet">
 </head>
 <body>
+    <canvas id="neural-bg"></canvas>
 
-  <h1>Trading Terminal</h1>
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="20" r="8" fill="none" stroke="#00ffff" stroke-width="2"/>
+                    <circle cx="25" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/>
+                    <circle cx="75" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/>
+                    <circle cx="50" cy="80" r="8" fill="none" stroke="#ffff00" stroke-width="2"/>
+                    <line x1="50" y1="28" x2="25" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+                    <line x1="50" y1="28" x2="75" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+                    <line x1="25" y1="58" x2="50" y2="72" stroke="#ff00ff" stroke-width="1" opacity="0.6"/>
+                    <line x1="75" y1="58" x2="50" y2="72" stroke="#ff00ff" stroke-width="1" opacity="0.6"/>
+                    <circle cx="50" cy="50" r="5" fill="#00ffff"/>
+                    <line x1="50" y1="28" x2="50" y2="45" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+                    <line x1="50" y1="55" x2="50" y2="72" stroke="#ffff00" stroke-width="1" opacity="0.6"/>
+                    <line x1="33" y1="50" x2="45" y2="50" stroke="#ff00ff" stroke-width="1" opacity="0.6"/>
+                    <line x1="55" y1="50" x2="67" y2="50" stroke="#ff00ff" stroke-width="1" opacity="0.6"/>
+                </svg>
+                <span class="logo-text">TT</span>
+            </a>
+            
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#projects">ADVANTAGES</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Блок сообщений -->
-  <div id="message"></div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1>
+            <p class="subtitle">
+                Your Trading Terminal isn’t just a tool—it’s a silent strategist. 
+                It filters market noise and highlights real signals, letting you act with clarity.
+            </p>
+            <div class="hero-video-wrapper" style="text-align:center; margin-top:50px;">
+                <iframe 
+                    width="720" 
+                    height="405"
+                    class="hero-video"
+                    src="https://www.youtube.com/embed/4Cfp5ZoaNZc?autoplay=0&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&mute=0"
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <a href="#about" class="scroll-btn">
+            <div class="scroll-btn-inner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                </svg>
+            </div>
+        </a>
+    </section>
 
-  <!-- Кнопки покупки -->
-  <button class="buyBtn" data-product="product1">Buy Product 1</button>
-  <button class="buyBtn" data-product="product2">Buy Product 2</button>
-  <button class="buyBtn" data-product="product3">Buy Product 3</button>
+    <section id="about" class="fade-in">
+        <h2 class="section-title">ABOUT THE PRODUCT</h2>
+        <div class="about-container">
+            <div class="about-image">
+                <div class="profile-img-wrapper">
+                    <div class="profile-img"><span>♛</span></div>
+                </div>
+            </div>
+            <div class="about-content">
+                <h3>Trading Terminal Overview</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
+                    Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision. It combines advanced order book visualization, multi-exchange data tracking, and customizable trading pairs to create a fully adaptable trading experience.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
+                    With flexible control over order book depth and an intuitive interface, users can focus on strategy rather than noise. Adaptive insights help respond to market changes, making this terminal a smart ally for both novice and professional traders.
+                </p>
 
-  <!-- Canvas для портфолио/анимации -->
-  <canvas id="neural-bg"></canvas>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <button class="stat-card-link buyBtn" data-product="product1">
+                            <div class="stat-label">BUY</div>
+                            <div class="stat-number">$35</div>
+                            <div class="stat-label">Lifetime license</div>
+                        </button>
+                    </div>
+                    <div class="stat-card">
+                        <button class="stat-card-link buyBtn" data-product="product2">
+                            <div class="stat-label">BUY</div>
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Exp</div>
+                        </button>
+                    </div>
+                    <div class="stat-card">
+                        <button class="stat-card-link buyBtn" data-product="product3">
+                            <div class="stat-label">BUY</div>
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Clients</div>
+                        </button>
+                    </div>
+                </div>
 
-  <!-- Скрипты -->
-  <script src="portfolio.js"></script>
-  <script src="buy.js"></script>
-  <script>
-    // Подключаем сервер Render
-    const SERVER_URL = 'https://cb-9.onrender.com';
+                <!-- Блок сообщений для buy.js -->
+                <div id="message" style="margin-top:20px; color:lime; font-weight:bold;"></div>
+            </div>
+        </div>
+    </section>
 
-    const buttons = document.querySelectorAll('.buyBtn');
-    const messageDiv = document.getElementById('message');
+    <section id="projects" class="fade-in">
+        <h2 class="section-title">ADVANTAGES</h2>
+        <div class="projects-grid">
+            <div class="glass-card project-card">
+                <h3 style="color: var(--primary);">Order Book Visualization</h3>
+                <p style="color: var(--text-secondary);">Highlights all significant orders on the chart, including large limit orders, with customizable display settings.</p>
+            </div>
+            <div class="glass-card project-card">
+                <h3 style="color: var(--secondary);">Multi-Exchange Analysis</h3>
+                <p style="color: var(--text-secondary);">Tracks data from multiple exchanges simultaneously, showing each order with its source.</p>
+            </div>
+            <div class="glass-card project-card">
+                <h3 style="color: var(--accent);">Customizable Trading Pairs</h3>
+                <p style="color: var(--text-secondary);">Add your own pairs for analysis and focus only on the data you need.</p>
+            </div>
+            <div class="glass-card project-card">
+                <h3 style="color: var(--primary);">Deep Order Book Control</h3>
+                <p style="color: var(--text-secondary);">Adjust the depth of the order book display for a detailed understanding of market structure.</p>
+            </div>
+            <div class="glass-card project-card">
+                <h3 style="color: var(--secondary);">Intuitive Interface</h3>
+                <p style="color: var(--text-secondary);">Designed for easy interaction with charts and orders, letting you focus on your strategy.</p>
+            </div>
+            <div class="glass-card project-card">
+                <h3 style="color: var(--accent);">Adaptive Insights</h3>
+                <p style="color: var(--text-secondary);">Responds to market changes, providing guidance for more effective decision-making.</p>
+            </div>
+        </div>
+    </section>
 
-    buttons.forEach(button => {
-      button.addEventListener('click', async () => {
-        const product = button.getAttribute('data-product');
-        messageDiv.textContent = 'Creating checkout...';
+    <section id="contact" class="fade-in">
+        <h2 class="section-title">CONTACT</h2>
+        <form class="contact-form glass-card">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="neural-btn">SEND MESSAGE</button>
+        </form>
+    </section>
 
-        try {
-          // Создаём checkout на сервере Render
-          const res = await fetch(`${SERVER_URL}/create-checkout`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ product })
-          });
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Advantages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 10px;">Let's build something amazing together</p>
+                <div class="social-links">
+                    <a href="#" aria-label="GitHub">…</a>
+                    <a href="#" aria-label="LinkedIn">…</a>
+                    <a href="#" aria-label="Twitter">…</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trading Terminal Portfolio. All rights reserved. Provided by <a href="https://terminal-trade.github.io/Trading-Assistant/index.html">TRADING TERMINAL</a></p>
+        </div>
+    </footer>
 
-          const data = await res.json();
-          if (data.checkoutUrl) {
-            const win = window.open(data.checkoutUrl, '_blank');
-            messageDiv.textContent = 'Checkout opened. Complete the payment.';
-
-            // Проверяем каждые 3 секунды, доступен ли файл
-            const checkDownload = setInterval(async () => {
-              try {
-                const dlRes = await fetch(`${SERVER_URL}/download/${product}`);
-                const dlData = await dlRes.json();
-
-                if (dlData.fileUrl) {
-                  messageDiv.innerHTML = `Payment confirmed! Download your file: <a href="${dlData.fileUrl}" target="_blank">${dlData.fileUrl}</a>`;
-                  clearInterval(checkDownload);
-                  if (win && !win.closed) win.close();
-                }
-              } catch (err) {
-                console.error('Error checking download:', err);
-              }
-            }, 3000);
-
-          } else {
-            messageDiv.textContent = 'Failed to create checkout.';
-            console.error(data);
-          }
-        } catch (err) {
-          console.error('Error creating checkout:', err);
-          messageDiv.textContent = 'Error creating checkout.';
-        }
-      });
-    });
-  </script>
-
+    <script src="tooplate-neural-scripts.js"></script>
+    <script src="buy.js"></script>
 </body>
 </html>
