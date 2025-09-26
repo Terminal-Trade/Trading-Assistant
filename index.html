@@ -1,1 +1,254 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Trading Terminal</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet"> <link href="tooplate-neural-style.css" rel="stylesheet"> </head> <body> <canvas id="neural-bg"></canvas> <nav id="navbar"> <div class="nav-container"> <a href="#home" class="logo-container"> <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"> <!-- Trading Terminal Logo --> <circle cx="50" cy="20" r="8" fill="none" stroke="#00ffff" stroke-width="2"/> <circle cx="25" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/> <circle cx="75" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/> <circle cx="50" cy="80" r="8" fill="none" stroke="#ffff00" stroke-width="2"/> <!-- Connections --> <line x1="50" y1="28" x2="25" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/> <line x1="50" y1="28" x2="75" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/> <line x1="25" y1="58" x2="50" y2="72" stroke="#ff00ff" stroke-width="1" opacity="0.6"/> <line x1="75" y1="58" x2="50" y2="72" stroke="#ff00ff" stroke-width="1" opacity="0.6"/> <!-- Center node --> <circle cx="50" cy="50" r="5" fill="#00ffff"/> <line x1="50" y1="28" x2="50" y2="45" stroke="#00ffff" stroke-width="1" opacity="0.6"/> <line x1="50" y1="55" x2="50" y2="72" stroke="#ffff00" stroke-width="1" opacity="0.6"/> <line x1="33" y1="50" x2="45" y2="50" stroke="#ff00ff" stroke-width="1" opacity="0.6"/> <line x1="55" y1="50" x2="67" y2="50" stroke="#ff00ff" stroke-width="1" opacity="0.6"/> </svg> <span class="logo-text">TT</span> </a> <div class="mobile-menu-toggle" id="mobile-toggle"> <span></span> <span></span> <span></span> </div> <div class="nav-menu" id="nav-menu"> <ul> <li><a href="#home">HOME</a></li> <li><a href="#about">ABOUT</a></li> <li><a href="#projects">ADVANTAGES</a></li> <li><a href="#contact">CONTACT</a></li> </ul> </div> </div> </nav> <section id="home" class="hero"> <div class="hero-content"> <h1 class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1> <p class="subtitle"> Your Trading Terminal isn’t just a tool—it’s a silent strategist. It filters market noise and highlights real signals, letting you act with clarity. </p> <!-- Видео --> <div class="hero-video-wrapper" style="text-align:center; margin-top:50px;"> <iframe width="720" height="405" class="hero-video" src="https://www.youtube.com/embed/4Cfp5ZoaNZc?autoplay=0&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe> </div> </div> <a href="#about" class="scroll-btn"> <div class="scroll-btn-inner"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/> </svg> </div> </a> </section> <section id="about" class="fade-in"> <h2 class="section-title">ABOUT THE PRODUCT</h2> <div class="about-container"> <div class="about-image"> <div class="profile-img-wrapper"> <div class="profile-img"> <span>♛</span> </div> </div> </div> <div class="about-content"> <h3>Trading Terminal Overview</h3> <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;"> Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision. It combines advanced order book visualization, multi-exchange data tracking, and customizable trading pairs to create a fully adaptable trading experience. </p> <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);"> With flexible control over order book depth and an intuitive interface, users can focus on strategy rather than noise. Adaptive insights help respond to market changes, making this terminal a smart ally for both novice and professional traders. </p> <div class="about-stats"> <div class="stat-card"> <a href="https://example.com" target="_blank" class="stat-card-link"> <div class="stat-label">BUY</div> <div class="stat-number">$35</div> <div class="stat-label">Lifetime license</div> </div> </a> <a href="https://example.com" target="_blank" class="stat-card-link"> <div class="stat-label">BUY</div> <div class="stat-number">5+</div> <div class="stat-label">Years Exp</div> </div> </a> <a href="https://example.com" target="_blank" class="stat-card-link"> <div class="stat-label">BUY</div> <div class="stat-number">30+</div> <div class="stat-label">Clients</div> </div> </a> </div> </div> </div> </section> <section id="projects" class="fade-in"> <h2 class="section-title">ADVANTAGES</h2> <div class="projects-grid"> <div class="glass-card project-card"> <h3 style="color: var(--primary);">Order Book Visualization</h3> <p style="color: var(--text-secondary);">Highlights all significant orders on the chart, including large limit orders, with customizable display settings.</p> </div> <div class="glass-card project-card"> <h3 style="color: var(--secondary);">Multi-Exchange Analysis</h3> <p style="color: var(--text-secondary);">Tracks data from multiple exchanges simultaneously, showing each order with its source.</p> </div> <div class="glass-card project-card"> <h3 style="color: var(--accent);">Customizable Trading Pairs</h3> <p style="color: var(--text-secondary);">Add your own pairs for analysis and focus only on the data you need.</p> </div> <div class="glass-card project-card"> <h3 style="color: var(--primary);">Deep Order Book Control</h3> <p style="color: var(--text-secondary);">Adjust the depth of the order book display for a detailed understanding of market structure.</p> </div> <div class="glass-card project-card"> <h3 style="color: var(--secondary);">Intuitive Interface</h3> <p style="color: var(--text-secondary);">Designed for easy interaction with charts and orders, letting you focus on your strategy.</p> </div> <div class="glass-card project-card"> <h3 style="color: var(--accent);">Adaptive Insights</h3> <p style="color: var(--text-secondary);">Responds to market changes, providing guidance for more effective decision-making.</p> </div> </div> </section> <section id="contact" class="fade-in"> <h2 class="section-title">CONTACT</h2> <form class="contact-form glass-card"> <div class="form-group"> <input type="text" placeholder="Your Name" required> </div> <div class="form-group"> <input type="email" placeholder="Your Email" required> </div> <div class="form-group"> <textarea rows="5" placeholder="Your Message" required></textarea> </div> <button type="submit" class="neural-btn">SEND MESSAGE</button> </form> </section> <footer> <div class="footer-content"> <div class="footer-section"> <h3>Navigation</h3> <ul> <li><a href="#home">Home</a></li> <li><a href="#about">About</a></li> <li><a href="#projects">Advantages</a></li> <li><a href="#contact">Contact</a></li> </ul> </div> <div class="footer-section"> <h3>Connect</h3> <p style="color: var(--text-secondary); margin-bottom: 10px;"> Let's build something amazing together </p> <div class="social-links"> <a href="#" aria-label="GitHub"> <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/> </svg> </a> <a href="#" aria-label="LinkedIn"> <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/> </svg> </a> <a href="#" aria-label="Twitter"> <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"> <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/> </svg> </a> </div> </div> </div> <div class="footer-bottom"> <p>&copy; 2025 Trading Terminal Portfolio. All rights reserved. Provided by <a href="https://terminal-trade.github.io/Trading-Assistant/index.html">TRADING TERMINAL</a></p> </div> </footer> <script src="tooplate-neural-scripts.js"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
+<style>
+/* ===== Основные стили ===== */
+* {margin:0; padding:0; box-sizing:border-box;}
+:root {
+  --primary:#00ffff; --secondary:#ff00ff; --accent:#ffff00;
+  --bg-dark:#0a0a0a; --bg-glass:rgba(255,255,255,0.05);
+  --text-primary:#fff; --text-secondary:#b0b0b0;
+}
+body {
+  font-family: 'Exo 2', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  overflow-x:hidden;
+  position: relative;
+}
+body::before {
+  content:'';
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px, rgba(0,255,255,0.03) 2px, rgba(0,255,255,0.03) 4px
+  );
+  pointer-events:none; z-index:1;
+}
+p {line-height:1.7;}
+
+/* ===== Canvas фон ===== */
+#neural-bg {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.3;
+}
+
+/* ===== Навигация ===== */
+nav {
+  position: fixed; top:0; width:100%; padding:15px 50px;
+  background: rgba(10,10,10,0.9); backdrop-filter: blur(10px); z-index:1000;
+  border-bottom:1px solid rgba(0,255,255,0.2); transition: all 0.3s ease;
+}
+.nav-container {display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:0 auto;}
+.logo-container {display:flex; align-items:center; gap:15px; text-decoration:none; transition:all 0.3s ease;}
+.logo-container:hover {transform:scale(1.05);}
+.logo-svg {width:50px; height:50px; position:relative;}
+.logo-text {
+  font-family:'Audiowide',sans-serif; font-size:1.5rem; font-weight:400;
+  background: linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  letter-spacing:3px; text-transform:uppercase;
+}
+.nav-menu ul {list-style:none; display:flex; gap:40px;}
+nav a {font-family:'Audiowide'; color:var(--text-primary); text-decoration:none; position:relative; transition:0.3s; font-weight:400; letter-spacing:1px; padding:5px 0; font-size:0.85rem; text-transform:uppercase;}
+nav ul a::after {
+  content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary)); transition: width 0.3s ease;
+}
+nav ul a:hover::after {width:100%;}
+
+/* ===== Mobile ===== */
+.mobile-menu-toggle {display:none; flex-direction:column; cursor:pointer; z-index:1001;}
+.mobile-menu-toggle span {width:30px; height:3px; background:var(--primary); margin:3px 0; transition:0.3s; border-radius:2px;}
+.mobile-menu-toggle.active span:nth-child(1){transform: rotate(45deg) translate(8px,8px);}
+.mobile-menu-toggle.active span:nth-child(2){opacity:0;}
+.mobile-menu-toggle.active span:nth-child(3){transform: rotate(-45deg) translate(8px,-8px);}
+
+/* ===== Hero ===== */
+.hero {height:100vh; display:flex; align-items:center; justify-content:center; position:relative; margin-top:80px;}
+.hero-content {text-align:center; z-index:10; animation:fadeInUp 1s ease; margin-top:-90px;}
+.glitch {
+  font-family:'Orbitron',sans-serif; font-size:5rem; font-weight:900; text-transform:uppercase;
+  color:var(--text-primary); letter-spacing:8px; position:relative; animation:glitch 2s infinite;
+}
+.glitch::before,.glitch::after {content: attr(data-text); position:absolute; top:0; left:0; width:100%; height:100%;}
+.glitch::before {animation:glitch-1 0.5s infinite; color:var(--primary); z-index:-1;}
+.glitch::after {animation:glitch-2 0.5s infinite; color:var(--secondary); z-index:-2;}
+@keyframes glitch {0%,100%{text-shadow:0 0 5px rgba(0,255,255,0.5);}50%{text-shadow:0 0 20px rgba(255,0,255,0.5);}}
+@keyframes glitch-1 {0%,100%{clip:rect(42px,9999px,44px,0); transform:translate(0);}50%{clip:rect(12px,9999px,59px,0); transform:translate(-2px,-2px);}}
+@keyframes glitch-2 {0%,100%{clip:rect(12px,9999px,85px,0); transform:translate(0);}50%{clip:rect(78px,9999px,93px,0); transform:translate(2px,2px);}}
+.subtitle {
+  font-family:'Exo 2'; font-size:1.3rem; font-weight:300; margin-top:20px; opacity:0.9;
+  background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:gradient 3s ease infinite; letter-spacing:3px; text-transform:uppercase;
+}
+@keyframes gradient {0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+.scroll-btn {position:absolute; bottom:50px; left:50%; transform:translateX(-50%); cursor:pointer; animation:bounce 2s infinite; z-index:10;}
+.scroll-btn-inner {width:50px; height:50px; border:2px solid var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(0,255,255,0.1); backdrop-filter:blur(10px); transition:0.3s;}
+.scroll-btn:hover .scroll-btn-inner {background:rgba(0,255,255,0.2); transform:scale(1.1); box-shadow:0 0 30px var(--primary);}
+.scroll-btn svg {width:24px; height:24px; stroke:var(--primary); animation:arrowMove 1.5s infinite;}
+@keyframes bounce {0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0);}40%{transform:translateX(-50%) translateY(-20px);}60%{transform:translateX(-50%) translateY(-10px);}}
+@keyframes arrowMove {0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+@keyframes fadeInUp {from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);}}
+
+.glass-card {background:var(--bg-glass); backdrop-filter:blur(10px); border-radius:20px; padding:30px; border:1px solid rgba(255,255,255,0.1); transition:0.3s; margin-bottom:30px; position:relative; overflow:hidden;}
+.glass-card:hover {transform:translateY(-10px); box-shadow:0 20px 40px rgba(0,255,255,0.2); border-color:var(--primary);}
+.project-card::before {content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:linear-gradient(45deg, transparent,var(--primary),transparent); transform:rotate(45deg); transition:0.5s; opacity:0;}
+.project-card:hover::before {opacity:1;}
+.project-card:hover {box-shadow:0 0 20px rgba(0,255,255,0.8), inset 0 0 20px rgba(0,255,255,0.1);}
+
+/* Sections */
+section {padding:100px 50px; max-width:1200px; margin:0 auto; position:relative; z-index:2;}
+.section-title {font-family:'Orbitron'; font-size:3rem; font-weight:700; margin-bottom:50px; text-align:center; text-transform:uppercase; letter-spacing:4px; text-shadow:0 0 10px rgba(0,255,255,0.8),0 0 20px rgba(0,255,255,0.6),0 0 30px rgba(0,255,255,0.4);}
+
+/* About Stats */
+.about-stats {display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:40px;}
+.stat-card {text-align:center; padding:20px; background:var(--bg-glass); border-radius:15px; border:1px solid rgba(255,255,255,0.1); transition:0.3s;}
+.stat-card:hover {transform:translateY(-5px); border-color:var(--primary); box-shadow:0 10px 20px rgba(0,255,255,0.2);}
+.stat-number {font-family:'Orbitron'; font-size:2.5rem; font-weight:900; color:var(--primary); margin-bottom:5px;}
+.stat-label {font-family:'Audiowide'; font-size:0.8rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:2px; font-weight:400;}
+
+/* Responsive Menu */
+@media(max-width:768px){
+  nav{padding:15px 20px;}
+  .logo-text{font-size:1.2rem;}
+  .logo-svg{width:40px;height:40px;}
+  .mobile-menu-toggle{display:flex;}
+  .nav-menu{position:absolute;top:100%;left:0;width:100%;max-height:0;overflow:hidden;background:rgba(10,10,10,0.98);transition:max-height 0.3s;}
+  .nav-menu.active{max-height:400px;border-top:1px solid rgba(0,255,255,0.2);}
+  nav ul{flex-direction:column; gap:0; padding:20px;}
+  nav ul li{padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.05);}
+}
+
+/* ===== Canvas script ===== */
+</style>
+</head>
+<body>
+<canvas id="neural-bg"></canvas>
+<nav>
+  <div class="nav-container">
+    <a href="#home" class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="20" r="8" fill="none" stroke="#00ffff" stroke-width="2"/>
+        <circle cx="25" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/>
+        <circle cx="75" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/>
+        <circle cx="50" cy="80" r="8" fill="none" stroke="#ffff00" stroke-width="2"/>
+        <circle cx="50" cy="50" r="5" fill="#00ffff"/>
+        <line x1="50" y1="28" x2="25" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+        <line x1="50" y1="28" x2="75" y2="42" stroke="#00ffff" stroke-width="1" opacity="0.6"/>
+      </svg>
+      <span class="logo-text">TT</span>
+    </a>
+    <div class="mobile-menu-toggle" id="mobile-toggle">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-menu" id="nav-menu">
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#projects">ADVANTAGES</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section id="home" class="hero">
+  <div class="hero-content">
+    <h1 class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1>
+    <p class="subtitle">Your Trading Terminal isn’t just a tool—it’s a silent strategist. It filters market noise and highlights real signals, letting you act with clarity.</p>
+    <div class="hero-video-wrapper" style="text-align:center; margin-top:50px;">
+      <iframe width="720" height="405" class="hero-video" src="https://www.youtube.com/embed/4Cfp5ZoaNZc?autoplay=0&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+  <a href="#about" class="scroll-btn">
+    <div class="scroll-btn-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+  </a>
+</section>
+
+<section id="about">
+  <h2 class="section-title">ABOUT THE PRODUCT</h2>
+  <div class="about-container">
+    <div class="about-content">
+      <h3>Trading Terminal Overview</h3>
+      <p>Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision.</p>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-number">$35</div><div class="stat-label">Lifetime license</div></div>
+        <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Years Exp</div></div>
+        <div class="stat-card"><div class="stat-number">30+</div><div class="stat-label">Clients</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title">ADVANTAGES</h2>
+  <div class="projects-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;">
+    <div class="glass-card project-card"><h3 style="color: var(--primary);">Order Book Visualization</h3><p>Highlights all significant orders on the chart, including large limit orders, with customizable display settings.</p></div>
+    <div class="glass-card project-card"><h3 style="color: var(--secondary);">Multi-Exchange Analysis</h3><p>Tracks data from multiple exchanges simultaneously, showing each order with its source.</p></div>
+    <div class="glass-card project-card"><h3 style="color: var(--accent);">Customizable Trading Pairs</h3><p>Add your own pairs for analysis and focus only on the data you need.</p></div>
+    <div class="glass-card project-card"><h3 style="color: var(--primary);">Deep Order Book Control</h3><p>Adjust the depth of the order book display for a detailed understanding of market structure.</p></div>
+    <div class="glass-card project-card"><h3 style="color: var(--secondary);">Intuitive Interface</h3><p>Designed for easy interaction with charts and orders, letting you focus on your strategy.</p></div>
+    <div class="glass-card project-card"><h3 style="color: var(--accent);">Adaptive Insights</h3><p>Responds to market changes, providing guidance for more effective decision-making.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">CONTACT</h2>
+  <form class="contact-form glass-card">
+    <input type="text" placeholder="Your Name" required style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;"/>
+    <input type="email" placeholder="Your Email" required style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;"/>
+    <textarea rows="5" placeholder="Your Message" required style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:none;"></textarea>
+    <button type="submit" class="neural-btn" style="padding:12px 25px; border:none; border-radius:15px; background:var(--primary); color:#000; font-weight:700; cursor:pointer;">SEND MESSAGE</button>
+  </form>
+</section>
+
+<footer style="background:rgba(10,10,10,0.95); padding:50px 20px; text-align:center; color:var(--text-secondary);">
+  <p>&copy; 2025 Trading Terminal Portfolio. All rights reserved.</p>
+</footer>
+
+<script>
+/* Mobile toggle */
+const toggle = document.getElementById('mobile-toggle');
+const menu = document.getElementById('nav-menu');
+toggle.addEventListener('click',()=>{toggle.classList.toggle('active'); menu.classList.toggle('active');});
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click',function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* Canvas background */
+const canvas=document.getElementById('neural-bg'); const ctx=canvas.getContext('2d'); let width, height, points=[];
+function initCanvas(){width=canvas.width=window.innerWidth; height=canvas.height=window.innerHeight; points=[]; for(let i=0;i<100;i++){points.push({x:Math.random()*width,y:Math.random()*height,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});}} initCanvas();
+window.addEventListener('resize',initCanvas);
+function animate(){
+  ctx.clearRect(0,0,width,height);
+  for(let p of points){
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>width)p.dx*=-1;
+    if(p.y<0||p.y>height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fillStyle='rgba(0,255,255,0.5)'; ctx.fill();
+  }
+  for(let i=0;i<points.length;i++){
+    for(let j=i+1;j<points.length;j++){
+      let dx=points[i].x-points[j].x, dy=points[i].y-points[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<150){ctx.beginPath(); ctx.moveTo(points[i].x,points[i].y); ctx.lineTo(points[j].x,points[j].y); ctx.strokeStyle='rgba(0,255,255,'+(1-dist/150)+')'; ctx.lineWidth=1; ctx.stroke();}
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
