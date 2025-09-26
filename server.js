@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fetch = require('node-fetch');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 const COINBASE_API_KEY = process.env.COINBASE_API_KEY;
 const COINBASE_API_URL = 'https://api.commerce.coinbase.com/charges';
@@ -14,16 +15,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// Загружаем продукты
+// Загружаем все ссылки на продукты
 let rawData = fs.readFileSync(path.join(__dirname, 'products.json'));
 let productLinks = JSON.parse(rawData);
 
-// Состояние проданных/выданных файлов
-let soldFiles = {
-  product1: [],
-  product2: [],
-  product3: []
-};
+// Отслеживаем выданные ссылки
+let soldFiles = {};
+for (let key of Object.keys(productLinks)) {
+  soldFiles[key] = [];
+}
 
 // Создание checkout на Coinbase
 app.post('/create-checkout', async (req, res) => {
@@ -49,13 +49,11 @@ app.post('/create-checkout', async (req, res) => {
     });
 
     const data = await response.json();
-
-    if (data && data.data && data.data.hosted_url) {
+    if (data?.data?.hosted_url) {
       res.json({ checkoutUrl: data.data.hosted_url });
     } else {
       res.status(500).json({ error: 'Failed to create checkout', details: data });
     }
-
   } catch (err) {
     console.error('Server error:', err);
     res.status(500).json({ error: 'Server error', details: err.message });
@@ -68,12 +66,9 @@ app.post('/webhook', (req, res) => {
   if (!event) return res.sendStatus(400);
 
   if (event.type === 'charge:confirmed') {
-    const productKey = event.data.name.split(' ')[1]; // Берем "product1" из "Product product1"
+    const productKey = event.data.name.split(' ')[1]; // "product1"
     const available = productLinks[productKey].filter(link => !soldFiles[productKey].includes(link));
-    if (available.length === 0) {
-      console.log(`All files sold for ${productKey}`);
-      return res.sendStatus(200);
-    }
+    if (available.length === 0) return res.sendStatus(200);
 
     const file = available[0];
     soldFiles[productKey].push(file);
