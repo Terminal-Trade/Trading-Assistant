@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -10,24 +11,21 @@ const PORT = process.env.PORT || 10000;
 const COINBASE_API_KEY = process.env.COINBASE_API_KEY;
 const COINBASE_API_URL = 'https://api.commerce.coinbase.com/charges';
 
-// CORS (разрешаем фронт с GitHub Pages)
+// CORS для GitHub Pages
 app.use(cors({
   origin: 'https://terminal-trade.github.io',
   credentials: true
 }));
-
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// Загружаем список продуктов
+// Загружаем продукты
 const productsPath = path.join(__dirname, 'products.json');
 let productLinks = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));
 
-// Отслеживаем выданные ссылки
+// Проданные файлы
 let soldFiles = {};
-for (let key of Object.keys(productLinks)) {
-  soldFiles[key] = [];
-}
+for (let key of Object.keys(productLinks)) soldFiles[key] = [];
 
 // Создание checkout на Coinbase
 app.post('/create-checkout', async (req, res) => {
@@ -53,24 +51,21 @@ app.post('/create-checkout', async (req, res) => {
     });
 
     const data = await response.json();
-    if (data?.data?.hosted_url) {
-      res.json({ checkoutUrl: data.data.hosted_url });
-    } else {
-      res.status(500).json({ error: 'Failed to create checkout', details: data });
-    }
+    if (data?.data?.hosted_url) res.json({ checkoutUrl: data.data.hosted_url });
+    else res.status(500).json({ error: 'Failed to create checkout', details: data });
   } catch (err) {
     console.error('Server error:', err);
     res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
-// Webhook от Coinbase
+// Webhook Coinbase
 app.post('/webhook', (req, res) => {
   const event = req.body.event;
   if (!event) return res.sendStatus(400);
 
   if (event.type === 'charge:confirmed') {
-    const productKey = event.data.name.split(' ')[1]; // "product1"
+    const productKey = event.data.name.split(' ')[1];
     const available = productLinks[productKey].filter(link => !soldFiles[productKey].includes(link));
     if (available.length === 0) return res.sendStatus(200);
 
@@ -82,17 +77,16 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
-// Endpoint выдачи ссылки после оплаты
+// Получение ссылки только после подтверждения оплаты
 app.get('/download/:product', (req, res) => {
   const product = req.params.product;
   if (!productLinks[product]) return res.json({ fileUrl: null });
 
-  const available = productLinks[product].filter(link => !soldFiles[product].includes(link));
-  if (!available || available.length === 0) return res.json({ fileUrl: null });
+  // Отдаём только уже проданный файл
+  const sold = soldFiles[product];
+  if (!sold || sold.length === 0) return res.json({ fileUrl: null });
 
-  const fileUrl = available[0];
-  soldFiles[product].push(fileUrl);
-  res.json({ fileUrl });
+  res.json({ fileUrl: sold[sold.length - 1] }); // последняя проданная ссылка
 });
 
 app.listen(PORT, () => {
