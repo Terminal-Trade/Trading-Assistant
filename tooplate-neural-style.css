@@ -380,6 +380,16 @@ https://www.tooplate.com/view/2139-neural-portfolio
         .stat-card-link .stat-number {
             background: transparent; /* убираем любые белые заливки */
         }
+		
+		/* Верхние кнопки — показываем палец */
+        .stat-card-link {
+            cursor: pointer; /* палец при наведении */
+        }
+
+        /* Нижние проектные карточки — обычный курсор */
+        .project-card {
+            cursor: default; /* обычная стрелка */
+        }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
@@ -577,7 +587,7 @@ https://www.tooplate.com/view/2139-neural-portfolio
         .project-card {
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+            cursor: default;
         }
 
         .project-card h3 {
