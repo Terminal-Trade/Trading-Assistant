@@ -4,229 +4,140 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Trading Terminal</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --primary:#00ffff; --secondary:#ff00ff; --accent:#ffff00;
-  --bg-dark:#0a0a0a; --bg-glass:rgba(255,255,255,0.05);
-  --text-primary:#ffffff; --text-secondary:#b0b0b0;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:'Exo 2',sans-serif;
-  background:var(--bg-dark);
-  color:var(--text-primary);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
-  position:relative;
-}
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px, rgba(0,255,255,0.03) 2px, rgba(0,255,255,0.03) 4px);
-  z-index:1;
-}
-#neural-bg{position:fixed; inset:0; width:100%; height:100%; z-index:-1; opacity:0.28}
-nav{position:fixed;top:0;left:0;right:0;padding:14px 50px;background:rgba(10,10,10,0.9);backdrop-filter:blur(10px);z-index:1000;border-bottom:1px solid rgba(0,255,255,0.08)}
-.nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.logo-container{display:flex;align-items:center;gap:12px;text-decoration:none}
-.logo-text{font-family:'Audiowide';background:linear-gradient(90deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px;text-transform:uppercase}
-.nav-menu ul{display:flex;gap:36px;list-style:none}
-nav a{font-family:'Audiowide'; color:var(--text-primary); text-decoration:none; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase}
-.mobile-menu-toggle{display:none;cursor:pointer}
-.mobile-menu-toggle span{width:28px;height:3px;background:var(--primary);margin:4px 0;border-radius:2px;transition:all .25s}
-.hero{height:100vh;display:flex;align-items:center;justify-content:center;padding-top:70px}
-.hero-content{text-align:center;z-index:10;margin-top:-70px}
-.glitch{font-family:'Orbitron';font-size:4.6rem;letter-spacing:6px}
-.subtitle{font-size:1.05rem;margin-top:18px;letter-spacing:1px;opacity:.95}
-.section{padding:80px 40px;max-width:1100px;margin:0 auto;position:relative;z-index:2}
-.section-title{font-family:'Orbitron';font-size:2.2rem;margin-bottom:28px;text-align:center;color:var(--text-primary)}
-.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
-.stat-card{background:var(--bg-glass);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden}
-.stat-number{font-family:'Orbitron';font-size:2rem;color:var(--primary);margin-bottom:8px}
-.stat-label{color:var(--text-secondary);font-size:.85rem;margin-bottom:12px}
-.buy-control{display:inline-block;padding:8px 14px;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--secondary));color:#000;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .12s}
-.buy-control:active{transform:scale(.98)}
-.buy-small{position:absolute;right:14px;top:14px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;align-items:center;justify-content:center;padding:20px}
-.modal.open{display:flex}
-.modal-card{width:100%;max-width:920px;background:#0b0b0b;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.03)}
-.modal-close{cursor:pointer;font-size:20px;color:var(--text-secondary)}
-.modal-body{padding:0}
-.checkout-frame{width:100%;height:640px;border:0;display:block}
-.loader-row{display:flex;align-items:center;gap:12px;padding:12px 16px}
-.spinner{width:18px;height:18px;border-radius:50%;border:3px solid rgba(255,255,255,0.08);border-top-color:var(--primary);animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.message{color:var(--text-secondary);font-size:.95rem}
-.download-box{margin-top:16px;padding:14px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-.download-link{display:inline-block;color:var(--primary);text-decoration:underline}
-@media(max-width:900px){
-  .glitch{font-size:2.4rem}
-  .about-stats{grid-template-columns:1fr;gap:14px}
-  nav{padding:12px 20px}
-  .mobile-menu-toggle{display:block}
-  .nav-menu{display:none}
-  .nav-menu.active{display:block;background:rgba(10,10,10,0.98);position:absolute;left:0;right:0;top:64px;padding:10px 20px;border-top:1px solid rgba(0,255,255,0.04)}
-}
-html,body{background-color:var(--bg-dark)}
+body{font-family:sans-serif;background:#0a0a0a;color:#fff;margin:0;padding:0;}
+.buy-control{cursor:pointer;padding:8px 12px;background:linear-gradient(90deg,#0ff,#f0f);border-radius:8px;color:#000;margin-top:10px;display:inline-block;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000;}
+.modal.open{display:flex;}
+.modal-content{background:#111;padding:20px;border-radius:8px;max-width:600px;width:90%;position:relative;}
+.modal-close{position:absolute;top:10px;right:14px;cursor:pointer;color:#fff;font-size:18px;}
+.download-box{margin-top:16px;padding:14px;background:rgba(255,255,255,0.05);border-radius:6px;display:none;}
 </style>
 </head>
 <body>
 
-<canvas id="neural-bg" aria-hidden="true"></canvas>
+<h1>Trading Terminal</h1>
 
-<nav>
-  <div class="nav-container">
-    <a class="logo-container" href="#home">
-      <svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="20" r="8" fill="none" stroke="#00ffff" stroke-width="2"/><circle cx="25" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/><circle cx="75" cy="50" r="8" fill="none" stroke="#ff00ff" stroke-width="2"/><circle cx="50" cy="50" r="5" fill="#00ffff"/></svg>
-      <span class="logo-text">TT</span>
-    </a>
-
-    <div style="display:flex;align-items:center;gap:18px">
-      <div id="mobile-toggle" class="mobile-menu-toggle" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div id="nav-menu" class="nav-menu">
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Advantages</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
+<div>
+  <div>
+    <h3>Windows $35</h3>
+    <a class="buy-control" data-product="product1">Buy</a>
   </div>
-</nav>
-
-<section id="home" class="hero" aria-labelledby="home-title">
-  <div class="hero-content">
-    <h1 id="home-title" class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1>
-    <p class="subtitle">Your Trading Terminal isn’t just a tool — it’s a silent strategist.</p>
-    <div style="margin-top:28px;max-width:820px;margin-left:auto;margin-right:auto">
-      <iframe width="100%" height="420" src="https://www.youtube.com/embed/4Cfp5ZoaNZc" title="Promo" frameborder="0" allowfullscreen></iframe>
-    </div>
+  <div>
+    <h3>Linux $35</h3>
+    <a class="buy-control" data-product="product2">Buy</a>
   </div>
-</section>
-
-<section id="about" class="section" aria-labelledby="about-title">
-  <h2 id="about-title" class="section-title">ABOUT & BUY</h2>
-  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
-    <div style="flex:1;min-width:280px">
-      <p style="color:var(--text-secondary)">Lifetime license. Instant download after confirmed payment. Each purchase issues a unique file link; once used it cannot be reused.</p>
-      <div class="download-box" id="downloadBox" aria-live="polite" style="display:none">
-        <div id="downloadMessage" class="message">Your download link:</div>
-        <div style="margin-top:8px"><a id="downloadUrl" class="download-link" target="_blank" rel="noopener">—</a></div>
-      </div>
-    </div>
-
-    <div style="flex:1.3;min-width:320px">
-      <div class="about-stats" role="list">
-        <div class="stat-card" role="listitem">
-          <div class="stat-label">Windows</div>
-          <div class="stat-number">$35</div>
-          <div class="stat-label">Lifetime license</div>
-          <a class="buy-control buy-small" data-product="product1" role="button">Buy</a>
-        </div>
-        <div class="stat-card" role="listitem">
-          <div class="stat-label">Linux</div>
-          <div class="stat-number">$35</div>
-          <div class="stat-label">Lifetime license</div>
-          <a class="buy-control buy-small" data-product="product2" role="button">Buy</a>
-        </div>
-        <div class="stat-card" role="listitem">
-          <div class="stat-label">Mac</div>
-          <div class="stat-number">$35</div>
-          <div class="stat-label">Lifetime license</div>
-          <a class="buy-control buy-small" data-product="product3" role="button">Buy</a>
-        </div>
-      </div>
-    </div>
+  <div>
+    <h3>Mac $35</h3>
+    <a class="buy-control" data-product="product3">Buy</a>
   </div>
-</section>
+</div>
 
-<section id="projects" class="section" aria-labelledby="proj-title">
-  <h2 id="proj-title" class="section-title">ADVANTAGES</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px">
-    <div class="glass-card project-card"><h3>Order Book Visualization</h3><p style="color:var(--text-secondary)">Highlights all significant orders.</p></div>
-    <div class="glass-card project-card"><h3>Multi-Exchange Analysis</h3><p style="color:var(--text-secondary)">Tracks data across exchanges.</p></div>
-    <div class="glass-card project-card"><h3>Customizable Pairs</h3><p style="color:var(--text-secondary)">Add your trading pairs.</p></div>
-  </div>
-</section>
+<div class="download-box" id="downloadBox">
+  <p id="downloadMessage">Your download link:</p>
+  <a id="downloadUrl" href="#" target="_blank" rel="noopener"></a>
+</div>
 
-<section id="contact" class="section" aria-labelledby="contact-title">
-  <h2 id="contact-title" class="section-title">CONTACT</h2>
-  <form class="glass-card" id="contactForm" style="display:flex;flex-direction:column;gap:10px">
-    <input placeholder="Your name" required style="padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.02);color:var(--text-primary)"/>
-    <input type="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.02);color:var(--text-primary)"/>
-    <textarea rows="4" placeholder="Message" required style="padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.02);color:var(--text-primary)"></textarea>
-    <button type="submit" style="background:linear-gradient(90deg,var(--primary),var(--secondary));border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer">Send</button>
-  </form>
-</section>
-
-<footer style="padding:40px 20px;text-align:center;color:var(--text-secondary)">
-  <div style="max-width:1100px;margin:0 auto">© 2025 Trading Terminal. All rights reserved.</div>
-</footer>
-
-<div id="checkoutModal" class="modal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Checkout">
-    <div class="modal-header">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--primary)"></div>
-        <div style="color:var(--text-secondary)">Secure Checkout</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div id="modalStatus" class="message">Preparing checkout...</div>
-        <div id="closeModal" class="modal-close" title="Close">&times;</div>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.02)">
-        <div class="loader-row"><div class="spinner" aria-hidden="true"></div><div id="loaderMsg" class="message">Opening checkout — please wait.</div></div>
-      </div>
-      <iframe id="checkoutIframe" class="checkout-frame" src="" title="Checkout"></iframe>
-    </div>
+<div class="modal" id="checkoutModal">
+  <div class="modal-content">
+    <span class="modal-close" id="closeModal">&times;</span>
+    <p id="modalStatus">Preparing checkout...</p>
+    <iframe id="checkoutIframe" src="" style="width:100%;height:500px;border:0;"></iframe>
   </div>
 </div>
 
 <script>
 const SERVER_URL = 'https://trading-assistant-v6q5.onrender.com';
-const mobileToggle = document.getElementById('mobile-toggle');
-const navMenu = document.getElementById('nav-menu');
-const buyButtons = document.querySelectorAll('.buy-control[data-product]');
+const buyButtons = document.querySelectorAll('.buy-control');
 const checkoutModal = document.getElementById('checkoutModal');
 const checkoutIframe = document.getElementById('checkoutIframe');
 const closeModalBtn = document.getElementById('closeModal');
 const modalStatus = document.getElementById('modalStatus');
-const loaderMsg = document.getElementById('loaderMsg');
 const downloadBox = document.getElementById('downloadBox');
 const downloadUrl = document.getElementById('downloadUrl');
 const downloadMessage = document.getElementById('downloadMessage');
 
 let pollIntervalId = null;
-let currentProduct = null;
 let pollingRunning = false;
+let currentProduct = null;
 
-mobileToggle.addEventListener('click', () => { mobileToggle.classList.toggle('active'); navMenu.classList.toggle('active'); });
-document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); if(el) el.scrollIntoView({behavior:'smooth'}); navMenu.classList.remove('active'); mobileToggle.classList.remove('active'); }); });
+closeModalBtn.addEventListener('click', () => { closeCheckoutModal(); });
+checkoutModal.addEventListener('click', (e) => { if(e.target===checkoutModal) closeCheckoutModal(); });
 
-function openCheckoutModal(url){ checkoutIframe.src=url; checkoutModal.classList.add('open'); checkoutModal.setAttribute('aria-hidden','false'); modalStatus.textContent='Checkout open'; loaderMsg.textContent='Please complete payment in the window. We will automatically check for your download link.'; }
-function closeCheckoutModal(){ checkoutModal.classList.remove('open'); checkoutModal.setAttribute('aria-hidden','true'); checkoutIframe.src='about:blank'; modalStatus.textContent='Closed'; stopPolling(); }
-closeModalBtn.addEventListener('click', closeCheckoutModal); checkoutModal.addEventListener('click', (ev) => { if(ev.target===checkoutModal) closeCheckoutModal(); });
+function openCheckoutModal(url){
+  checkoutIframe.src = url;
+  checkoutModal.classList.add('open');
+  modalStatus.textContent = 'Checkout open. Complete payment.';
+}
+function closeCheckoutModal(){
+  checkoutModal.classList.remove('open');
+  checkoutIframe.src = 'about:blank';
+  stopPolling();
+}
 
-function startPolling(product){ stopPolling(); currentProduct=product; pollingRunning=true; pollIntervalId=setInterval(async()=>{ try{ const resp=await fetch(`${SERVER_URL}/download/${encodeURIComponent(product)}`,{method:'GET',credentials:'include'}); if(!resp.ok)return; const data=await resp.json(); if(data && data.fileUrl){ showDownloadLink(data.fileUrl); stopPolling(); closeCheckoutModal(); } }catch(err){console.warn('Polling error:',err);} },3000); setTimeout(()=>{ if(pollingRunning){ stopPolling(); loaderMsg.textContent='Timeout: download not available. If you paid, contact support.'; } },20*60*1000);}
-function stopPolling(){ if(pollIntervalId) clearInterval(pollIntervalId); pollIntervalId=null; pollingRunning=false;}
-function showDownloadLink(url){ downloadUrl.href=url; downloadUrl.textContent=url; downloadBox.style.display='block'; downloadMessage.textContent='Your download link (one-time use)'; }
+function startPolling(product){
+  stopPolling();
+  currentProduct = product;
+  pollingRunning = true;
+  pollIntervalId = setInterval(async()=>{
+    try{
+      const resp = await fetch(`${SERVER_URL}/download/${encodeURIComponent(product)}`);
+      if(!resp.ok) return;
+      const data = await resp.json();
+      if(data && data.fileUrl){
+        showDownloadLink(data.fileUrl);
+        stopPolling();
+        closeCheckoutModal();
+      }
+    }catch(err){ console.warn('Polling error:',err);}
+  }, 3000);
 
-async function createCheckoutAndOpen(product){ try{ modalStatus.textContent='Creating checkout...'; loaderMsg.textContent='Contacting server...'; const res=await fetch(`${SERVER_URL}/create-checkout`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product}),credentials:'include'}); if(!res.ok){ modalStatus.textContent='Failed to create checkout'; loaderMsg.textContent='Server error. Check server logs.'; return; } const data=await res.json(); if(!data||!data.checkoutUrl){ modalStatus.textContent='Failed to create checkout'; loaderMsg.textContent='Invalid server response.'; return; } openCheckoutModal(data.checkoutUrl); startPolling(product); }catch(err){ console.error('createCheckoutAndOpen error',err); modalStatus.textContent='Error creating checkout'; loaderMsg.textContent='Network error. Try again.'; } }
+  // Таймаут 20 минут
+  setTimeout(()=>{
+    if(pollingRunning){
+      stopPolling();
+      modalStatus.textContent = 'Timeout: download not available. Contact support.';
+    }
+  }, 20*60*1000);
+}
 
-buyButtons.forEach(btn=>{ btn.addEventListener('click',()=>{ const product=btn.getAttribute('data-product'); if(!product)return; downloadBox.style.display='none'; downloadUrl.href='#'; downloadUrl.textContent=''; createCheckoutAndOpen(product); }); });
+function stopPolling(){ if(pollIntervalId) clearInterval(pollIntervalId); pollIntervalId=null; pollingRunning=false; }
 
-document.getElementById('contactForm').addEventListener('submit',(e)=>{e.preventDefault(); alert('Message sent (demo).');});
-document.addEventListener('keydown',(ev)=>{ if(ev.key==='Escape' && checkoutModal.classList.contains('open')) closeCheckoutModal(); });
+function showDownloadLink(url){
+  downloadUrl.href = url;
+  downloadUrl.textContent = url;
+  downloadBox.style.display = 'block';
+  downloadMessage.textContent = 'Your download link (one-time use)';
+}
 
-(function canvasBackground(){ const canvas=document.getElementById('neural-bg'); if(!canvas)return; const ctx=canvas.getContext('2d'); let w=canvas.width=window.innerWidth; let h=canvas.height=window.innerHeight; const N=Math.max(40,Math.floor((w*h)/60000)); const points=[]; for(let i=0;i<N;i++) points.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5}); window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight;}); function frame(){ctx.clearRect(0,0,w,h); for(let p of points){p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w)p.vx*=-1; if(p.y<0||p.y>h)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,1.8,0,Math.PI*2); ctx.fillStyle='rgba(0,255,255,0.35)'; ctx.fill();} for(let i=0;i<points.length;i++){for(let j=i+1;j<points.length;j++){ const dx=points[i].x-points[j].x, dy=points[i].y-points[j].y, d=Math.sqrt(dx*dx+dy*dy); if(d<130){ctx.beginPath();ctx.moveTo(points[i].x,points[i].y); ctx.lineTo(points[j].x,points[j].y); ctx.strokeStyle=`rgba(0,255,255,${Math.max(0,0.18-d/800)})`; ctx.lineWidth=0.8; ctx.stroke();}}} requestAnimationFrame(frame);} requestAnimationFrame(frame);})();
+async function createCheckoutAndOpen(product){
+  try{
+    modalStatus.textContent='Creating checkout...';
+    const res = await fetch(`${SERVER_URL}/create-checkout`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({product})
+    });
+    if(!res.ok){ modalStatus.textContent='Failed to create checkout'; return; }
+    const data = await res.json();
+    if(!data || !data.checkoutUrl){ modalStatus.textContent='Invalid server response'; return; }
+    openCheckoutModal(data.checkoutUrl);
+    startPolling(product);
+  }catch(err){
+    console.error(err);
+    modalStatus.textContent='Error creating checkout';
+  }
+}
+
+buyButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const product = btn.getAttribute('data-product');
+    downloadBox.style.display='none';
+    downloadUrl.href='#';
+    downloadUrl.textContent='';
+    createCheckoutAndOpen(product);
+  });
+});
 </script>
 
 </body>
