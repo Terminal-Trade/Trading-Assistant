@@ -8,35 +8,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
 <link href="tooplate-neural-style.css" rel="stylesheet">
+
 <style>
-/* Loader styles */
-.loader {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #00ffff;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
+/* Loader overlay */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
+.loader-spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #00ffff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
 }
-.stat-link-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-.stat-result-link {
-    display: inline-block;
-    margin-top: 5px;
-    color: #00ffff;
-    text-decoration: none;
-    font-weight: bold;
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.loader-message {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-top: 15px;
+  text-align: center;
 }
 </style>
 </head>
@@ -44,102 +45,89 @@
 <canvas id="neural-bg"></canvas>
 
 <nav id="navbar">
-<!-- Навигация здесь (оставляем без изменений) -->
+<!-- Nav code оставляем без изменений -->
 </nav>
 
 <section id="home" class="hero">
-<!-- Hero section без изменений -->
+<!-- Hero code оставляем без изменений -->
 </section>
 
 <section id="about" class="fade-in">
-    <h2 class="section-title">ABOUT THE PRODUCT</h2>
-    <div class="about-container">
-        <div class="about-image">
-            <div class="profile-img-wrapper">
-                <div class="profile-img">
-                    <span>♛</span>
-                </div>
-            </div>
+<h2 class="section-title">ABOUT THE PRODUCT</h2>
+<div class="about-container">
+  <div class="about-image">
+    <!-- image code -->
+  </div>
+  <div class="about-content">
+    <h3>Trading Terminal Overview</h3>
+    <p>...</p>
+    <div class="about-stats">
+      <div class="stat-card" data-product="license">
+        <div class="stat-card-link">
+          <div class="stat-label">BUY</div>
+          <div class="stat-number">$35</div>
+          <div class="stat-label">Lifetime license</div>
         </div>
-        <div class="about-content">
-            <h3>Trading Terminal Overview</h3>
-            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-                Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision.
-            </p>
-            <div class="about-stats">
-                <div class="stat-card" data-id="1">
-                    <div class="stat-link-container">
-                        <div class="stat-label">BUY</div>
-                        <div class="loader" style="display:none;"></div>
-                        <div class="stat-number">$35</div>
-                    </div>
-                    <div class="stat-label">Lifetime license</div>
-                </div>
-                <div class="stat-card" data-id="2">
-                    <div class="stat-link-container">
-                        <div class="stat-label">BUY</div>
-                        <div class="loader" style="display:none;"></div>
-                        <div class="stat-number">5+</div>
-                    </div>
-                    <div class="stat-label">Years Exp</div>
-                </div>
-                <div class="stat-card" data-id="3">
-                    <div class="stat-link-container">
-                        <div class="stat-label">BUY</div>
-                        <div class="loader" style="display:none;"></div>
-                        <div class="stat-number">30+</div>
-                    </div>
-                    <div class="stat-label">Clients</div>
-                </div>
-            </div>
+      </div>
+      <div class="stat-card" data-product="experience">
+        <div class="stat-card-link">
+          <div class="stat-label">BUY</div>
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Years Exp</div>
         </div>
+      </div>
+      <div class="stat-card" data-product="clients">
+        <div class="stat-card-link">
+          <div class="stat-label">BUY</div>
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Clients</div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 </section>
 
 <section id="projects" class="fade-in">
-<!-- Advantages section без изменений -->
+<!-- Projects code оставляем без изменений -->
 </section>
 
 <section id="contact" class="fade-in">
-<!-- Contact section без изменений -->
+<!-- Contact code оставляем без изменений -->
 </section>
 
 <footer>
-<!-- Footer section без изменений -->
+<!-- Footer code оставляем без изменений -->
 </footer>
 
-<script src="tooplate-neural-scripts.js"></script>
+<!-- Loader -->
+<div class="loader-overlay" id="loader">
+  <div>
+    <div class="loader-spinner"></div>
+    <div class="loader-message" id="loader-message">Processing your payment, please wait...</div>
+  </div>
+</div>
+
 <script>
 document.querySelectorAll('.stat-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const loader = card.querySelector('.loader');
-        const label = card.querySelector('.stat-label');
-        loader.style.display = 'inline-block';
-        label.style.opacity = 0.5;
+  card.addEventListener('click', () => {
+    const loader = document.getElementById('loader');
+    const message = document.getElementById('loader-message');
+    loader.style.display = 'flex';
+    message.textContent = 'Processing your payment, please wait...';
 
-        let pingInterval = setInterval(() => {
-            console.log('Pinging server for stat-card', card.dataset.id);
-            // Тут можно вставить fetch('/check-payment?item='+card.dataset.id) или реальный API
-        }, 1500);
+    // Эмуляция пинга каждые 2 сек
+    const pingInterval = setInterval(() => {
+      console.log('Pinging server...');
+      // Здесь можно вставить реальный fetch на сервер
+    }, 2000);
 
-        // Симуляция успешной оплаты через 4 секунды
-        setTimeout(() => {
-            clearInterval(pingInterval);
-            loader.style.display = 'none';
-            label.style.opacity = 1;
-
-            // Создаём ссылку на доступ
-            const link = document.createElement('a');
-            link.href = 'https://example.com/download/' + card.dataset.id;
-            link.className = 'stat-result-link';
-            link.target = '_blank';
-            link.textContent = 'Access your item';
-            // Проверяем, чтобы не добавлять несколько ссылок
-            if(!card.querySelector('.stat-result-link')) {
-                card.appendChild(link);
-            }
-        }, 4000);
-    });
+    // Эмуляция успешной оплаты через 5 секунд
+    setTimeout(() => {
+      clearInterval(pingInterval);
+      message.innerHTML = 'Payment successful! <a href="https://example.com/download" target="_blank" style="color:#0ff;">Click here to download</a>';
+    }, 5000);
+  });
 });
 </script>
 </body>
