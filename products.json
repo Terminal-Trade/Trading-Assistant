@@ -1,0 +1,38 @@
+{
+  "product1": [
+    "https://storage.com/product1/file1.zip",
+    "https://storage.com/product1/file2.zip",
+    "https://storage.com/product1/file3.zip",
+    "https://storage.com/product1/file4.zip",
+    "https://storage.com/product1/file5.zip",
+    "https://storage.com/product1/file6.zip",
+    "https://storage.com/product1/file7.zip",
+    "https://storage.com/product1/file8.zip",
+    "https://storage.com/product1/file9.zip",
+    "https://storage.com/product1/file10.zip"
+  ],
+  "product2": [
+    "https://storage.com/product2/file1.zip",
+    "https://storage.com/product2/file2.zip",
+    "https://storage.com/product2/file3.zip",
+    "https://storage.com/product2/file4.zip",
+    "https://storage.com/product2/file5.zip",
+    "https://storage.com/product2/file6.zip",
+    "https://storage.com/product2/file7.zip",
+    "https://storage.com/product2/file8.zip",
+    "https://storage.com/product2/file9.zip",
+    "https://storage.com/product2/file10.zip"
+  ],
+  "product3": [
+    "https://storage.com/product3/file1.zip",
+    "https://storage.com/product3/file2.zip",
+    "https://storage.com/product3/file3.zip",
+    "https://storage.com/product3/file4.zip",
+    "https://storage.com/product3/file5.zip",
+    "https://storage.com/product3/file6.zip",
+    "https://storage.com/product3/file7.zip",
+    "https://storage.com/product3/file8.zip",
+    "https://storage.com/product3/file9.zip",
+    "https://storage.com/product3/file10.zip"
+  ]
+}
