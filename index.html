@@ -9,167 +9,121 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
 <link href="tooplate-neural-style.css" rel="stylesheet">
 <style>
-/* Модальное окно */
-.modal-overlay {
+/* Loader CSS */
+.loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: none;
+    background: rgba(0,0,0,0.5);
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
-.modal-content {
-    background: #111;
-    color: #fff;
-    padding: 30px;
-    border-radius: 12px;
+
+.loader-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loader-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px 50px;
+    border-radius: 20px;
     text-align: center;
-    max-width: 400px;
-    width: 90%;
-    font-family: 'Exo 2', sans-serif;
+    box-shadow: 0 0 30px rgba(0,255,255,0.3), 0 0 20px rgba(255,0,255,0.2);
+    backdrop-filter: blur(10px);
 }
-.loader {
-    border: 5px solid #f3f3f3;
+
+.loader-spinner {
+    border: 5px solid rgba(255,255,255,0.2);
     border-top: 5px solid #00ffff;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin: 20px auto;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px auto;
     animation: spin 1s linear infinite;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
+
+.loader-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
 }
-.modal-link {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #00ffff;
-    color: #111;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 </style>
 </head>
 <body>
 <canvas id="neural-bg"></canvas>
 
-<nav id="navbar">
-<!-- Навигация без изменений -->
-</nav>
+<!-- Navigation, hero, about, projects, contact sections остались без изменений -->
 
-<section id="home" class="hero">
-<!-- Hero без изменений -->
-</section>
-
-<section id="about" class="fade-in">
-<h2 class="section-title">ABOUT THE PRODUCT</h2>
-<div class="about-container">
-    <div class="about-image">
-        <div class="profile-img-wrapper">
-            <div class="profile-img"><span>♛</span></div>
-        </div>
-    </div>
-    <div class="about-content">
-        <h3>Trading Terminal Overview</h3>
-        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-            Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision. It combines advanced order book visualization, multi-exchange data tracking, and customizable trading pairs to create a fully adaptable trading experience.
-        </p>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
-            With flexible control over order book depth and an intuitive interface, users can focus on strategy rather than noise. Adaptive insights help respond to market changes, making this terminal a smart ally for both novice and professional traders.
-        </p>
-
-        <div class="about-stats">
-            <div class="stat-card" data-product="license">
-                <div class="stat-card-link">
-                    <div class="stat-label">BUY</div>
-                    <div class="stat-number">$35</div>
-                    <div class="stat-label">Lifetime license</div>
-                </div>
-            </div>
-            <div class="stat-card" data-product="experience">
-                <div class="stat-card-link">
-                    <div class="stat-label">BUY</div>
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Years Exp</div>
-                </div>
-            </div>
-            <div class="stat-card" data-product="clients">
-                <div class="stat-card-link">
-                    <div class="stat-label">BUY</div>
-                    <div class="stat-number">30+</div>
-                    <div class="stat-label">Clients</div>
-                </div>
-            </div>
+<!-- Loader Overlay -->
+<div class="loader-overlay" id="payment-loader">
+    <div class="loader-box">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Processing your payment, please wait...</div>
+        <div class="loader-text" style="font-size:0.9rem; margin-top:10px;">
+            If it takes too long, please try again.
         </div>
     </div>
 </div>
-</section>
 
-<!-- Прочие секции без изменений -->
 <footer>
-<!-- Footer без изменений -->
+<!-- footer content остался без изменений -->
 </footer>
-
-<!-- Модальное окно -->
-<div class="modal-overlay" id="paymentModal">
-    <div class="modal-content">
-        <h3 id="modal-title">Processing payment...</h3>
-        <div class="loader" id="modal-loader"></div>
-        <a href="#" target="_blank" class="modal-link" id="modal-link" style="display:none;">Download Now</a>
-        <p id="modal-text" style="margin-top:15px;">Please wait, this may take a few seconds.</p>
-    </div>
-</div>
 
 <script src="tooplate-neural-scripts.js"></script>
 <script>
-// JS для модалки и пинга
-const modal = document.getElementById('paymentModal');
-const modalTitle = document.getElementById('modal-title');
-const modalLink = document.getElementById('modal-link');
-const modalLoader = document.getElementById('modal-loader');
-const modalText = document.getElementById('modal-text');
+// Loader control
+function showLoader() {
+    document.getElementById('payment-loader').classList.add('active');
+}
 
-document.querySelectorAll('.stat-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const product = card.getAttribute('data-product');
-        modal.style.display = 'flex';
-        modalTitle.textContent = 'Processing payment...';
-        modalLoader.style.display = 'block';
-        modalLink.style.display = 'none';
-        modalText.textContent = 'Please wait, this may take a few seconds.';
+function hideLoader() {
+    document.getElementById('payment-loader').classList.remove('active');
+}
 
-        // Пинг к серверу
-        const interval = setInterval(() => {
-            fetch(`/check-payment/${product}`)
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === 'success') {
-                        clearInterval(interval);
-                        modalTitle.textContent = 'Payment successful!';
-                        modalLoader.style.display = 'none';
-                        modalLink.href = data.downloadUrl;
-                        modalLink.style.display = 'inline-block';
-                        modalText.textContent = '';
-                    }
-                })
-                .catch(err => {
-                    console.log('Ping error', err);
-                    // Не останавливаем пинг
-                });
-        }, 3000);
+// Ping until payment is successful
+function startPaymentPing(paymentId) {
+    showLoader();
+    const interval = setInterval(async () => {
+        try {
+            const res = await fetch(`/check-payment-status?id=${paymentId}`);
+            const data = await res.json();
+            if (data.status === 'success') {
+                clearInterval(interval);
+                hideLoader();
+                // Показываем ссылку на скачивание или доступ к продукту
+                const linkBlock = document.createElement('div');
+                linkBlock.style.textAlign = 'center';
+                linkBlock.style.marginTop = '20px';
+                linkBlock.innerHTML = `<a href="${data.downloadLink}" target="_blank" class="neural-btn">Access your product</a>`;
+                document.querySelector('#about .about-content').appendChild(linkBlock);
+            }
+        } catch (err) {
+            console.error('Payment ping error:', err);
+        }
+    }, 3000); // пинг каждые 3 секунды
+}
+
+// Пример запуска пинга при клике на блок
+document.querySelectorAll('.stat-card-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const paymentId = '12345'; // сюда подставить актуальный ID платежа
+        startPaymentPing(paymentId);
     });
-});
-
-// Закрытие модалки при клике вне
-modal.addEventListener('click', (e) => {
-    if(e.target === modal) modal.style.display = 'none';
 });
 </script>
 </body>
