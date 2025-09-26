@@ -23,7 +23,7 @@ buttons.forEach(button => {
       if (data.checkoutUrl) {
         // Открываем окно оплаты Coinbase
         const win = window.open(data.checkoutUrl, '_blank');
-        messageDiv.textContent = 'Checkout opened. Complete the payment.<br><span style="color:yellow; font-weight:normal;">Do not close or refresh this page — the download link will appear here after payment.</span>';
+        messageDiv.innerHTML = 'Checkout opened. Complete the payment.<br><span style="color:yellow; font-weight:normal;">Do not close or refresh this page — the download link will appear here after payment.</span>';
 
         // Проверяем каждые 3 секунды, доступен ли файл
         const checkDownload = setInterval(async () => {
