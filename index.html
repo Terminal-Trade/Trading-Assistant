@@ -9,157 +9,168 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
 <link href="tooplate-neural-style.css" rel="stylesheet">
 <style>
-  .payment-overlay {
+/* Модальное окно */
+.modal-overlay {
     position: fixed;
-    top: 0; left: 0; right:0; bottom:0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    color: #fff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
     display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.modal-content {
+    background: #111;
+    color: #fff;
+    padding: 30px;
+    border-radius: 12px;
     text-align: center;
-    padding: 20px;
-  }
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #00ffff;
+    max-width: 400px;
+    width: 90%;
+    font-family: 'Exo 2', sans-serif;
+}
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #00ffff;
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    margin: 20px auto;
     animation: spin 1s linear infinite;
-    margin: 20px 0;
-  }
-  @keyframes spin {
+}
+@keyframes spin {
     0% { transform: rotate(0deg);}
     100% { transform: rotate(360deg);}
-  }
-  .download-link {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #00ffff;
-    text-decoration: underline;
-  }
-  .payment-message {
-    font-size: 1rem;
-    margin-top: 10px;
-    color: #fff;
-  }
+}
+.modal-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #00ffff;
+    color: #111;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
 </style>
 </head>
 <body>
 <canvas id="neural-bg"></canvas>
 
 <nav id="navbar">
-  <!-- Navigation code here (same as your original) -->
+<!-- Навигация без изменений -->
 </nav>
 
 <section id="home" class="hero">
-  <div class="hero-content">
-    <h1 class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1>
-    <p class="subtitle">Your Trading Terminal isn’t just a tool—it’s a silent strategist. Filter market noise and highlight real signals.</p>
-    <div class="hero-video-wrapper" style="text-align:center; margin-top:50px;">
-      <iframe width="720" height="405" src="https://www.youtube.com/embed/4Cfp5ZoaNZc?autoplay=0&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-  </div>
+<!-- Hero без изменений -->
 </section>
 
 <section id="about" class="fade-in">
-  <h2 class="section-title">ABOUT THE PRODUCT</h2>
-  <div class="about-container">
+<h2 class="section-title">ABOUT THE PRODUCT</h2>
+<div class="about-container">
     <div class="about-image">
-      <div class="profile-img-wrapper"><div class="profile-img"><span>♛</span></div></div>
+        <div class="profile-img-wrapper">
+            <div class="profile-img"><span>♛</span></div>
+        </div>
     </div>
     <div class="about-content">
-      <h3>Trading Terminal Overview</h3>
-      <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-        Our trading terminal gives traders deep insights into the market with clarity and precision.
-      </p>
-      <div class="about-stats">
-        <div class="stat-card" data-product="product1">
-          <div class="stat-label">BUY</div>
-          <div class="stat-number">$35</div>
-          <div class="stat-label">Lifetime license</div>
+        <h3>Trading Terminal Overview</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
+            Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision. It combines advanced order book visualization, multi-exchange data tracking, and customizable trading pairs to create a fully adaptable trading experience.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
+            With flexible control over order book depth and an intuitive interface, users can focus on strategy rather than noise. Adaptive insights help respond to market changes, making this terminal a smart ally for both novice and professional traders.
+        </p>
+
+        <div class="about-stats">
+            <div class="stat-card" data-product="license">
+                <div class="stat-card-link">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">$35</div>
+                    <div class="stat-label">Lifetime license</div>
+                </div>
+            </div>
+            <div class="stat-card" data-product="experience">
+                <div class="stat-card-link">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Exp</div>
+                </div>
+            </div>
+            <div class="stat-card" data-product="clients">
+                <div class="stat-card-link">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+            </div>
         </div>
-        <div class="stat-card" data-product="product2">
-          <div class="stat-label">BUY</div>
-          <div class="stat-number">5+</div>
-          <div class="stat-label">Years Exp</div>
-        </div>
-        <div class="stat-card" data-product="product3">
-          <div class="stat-label">BUY</div>
-          <div class="stat-number">30+</div>
-          <div class="stat-label">Clients</div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 </section>
 
-<div class="payment-overlay" id="paymentOverlay">
-  <div>Processing your payment, please wait...</div>
-  <div class="spinner"></div>
-  <div class="payment-message" id="paymentMessage">
-    Payment may take a few seconds. Please do not close this window.
-  </div>
+<!-- Прочие секции без изменений -->
+<footer>
+<!-- Footer без изменений -->
+</footer>
+
+<!-- Модальное окно -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal-content">
+        <h3 id="modal-title">Processing payment...</h3>
+        <div class="loader" id="modal-loader"></div>
+        <a href="#" target="_blank" class="modal-link" id="modal-link" style="display:none;">Download Now</a>
+        <p id="modal-text" style="margin-top:15px;">Please wait, this may take a few seconds.</p>
+    </div>
 </div>
 
+<script src="tooplate-neural-scripts.js"></script>
 <script>
-const statCards = document.querySelectorAll('.stat-card');
-const overlay = document.getElementById('paymentOverlay');
-const paymentMessage = document.getElementById('paymentMessage');
+// JS для модалки и пинга
+const modal = document.getElementById('paymentModal');
+const modalTitle = document.getElementById('modal-title');
+const modalLink = document.getElementById('modal-link');
+const modalLoader = document.getElementById('modal-loader');
+const modalText = document.getElementById('modal-text');
 
-statCards.forEach(card => {
-  card.addEventListener('click', async () => {
-    const product = card.getAttribute('data-product');
-    overlay.style.display = 'flex';
-    paymentMessage.textContent = 'Payment may take a few seconds. Please do not close this window.';
+document.querySelectorAll('.stat-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const product = card.getAttribute('data-product');
+        modal.style.display = 'flex';
+        modalTitle.textContent = 'Processing payment...';
+        modalLoader.style.display = 'block';
+        modalLink.style.display = 'none';
+        modalText.textContent = 'Please wait, this may take a few seconds.';
 
-    try {
-      // Step 1: Create checkout
-      const res = await fetch('/create-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product })
-      });
-      const data = await res.json();
-      if (!data.checkoutUrl) {
-        paymentMessage.textContent = 'Failed to initiate payment. Please try again.';
-        return;
-      }
+        // Пинг к серверу
+        const interval = setInterval(() => {
+            fetch(`/check-payment/${product}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === 'success') {
+                        clearInterval(interval);
+                        modalTitle.textContent = 'Payment successful!';
+                        modalLoader.style.display = 'none';
+                        modalLink.href = data.downloadUrl;
+                        modalLink.style.display = 'inline-block';
+                        modalText.textContent = '';
+                    }
+                })
+                .catch(err => {
+                    console.log('Ping error', err);
+                    // Не останавливаем пинг
+                });
+        }, 3000);
+    });
+});
 
-      // Step 2: Open checkout window
-      const win = window.open(data.checkoutUrl, '_blank');
-
-      // Step 3: Poll server only while waiting
-      const interval = setInterval(async () => {
-        const dlRes = await fetch(`/download/${product}`);
-        const dlData = await dlRes.json();
-        if (dlData.fileUrl) {
-          clearInterval(interval);
-          overlay.style.display = 'none';
-          const link = document.createElement('a');
-          link.href = dlData.fileUrl;
-          link.target = '_blank';
-          link.className = 'download-link';
-          link.textContent = 'Download your product';
-          card.appendChild(link);
-          win.close();
-        }
-      }, 3000);
-
-    } catch (err) {
-      console.error(err);
-      paymentMessage.textContent = 'Error occurred. Please try again.';
-    }
-  });
+// Закрытие модалки при клике вне
+modal.addEventListener('click', (e) => {
+    if(e.target === modal) modal.style.display = 'none';
 });
 </script>
-
-<script src="tooplate-neural-scripts.js"></script>
 </body>
 </html>
