@@ -1,144 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Trading Terminal</title>
-<style>
-body{font-family:sans-serif;background:#0a0a0a;color:#fff;margin:0;padding:0;}
-.buy-control{cursor:pointer;padding:8px 12px;background:linear-gradient(90deg,#0ff,#f0f);border-radius:8px;color:#000;margin-top:10px;display:inline-block;}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:1000;}
-.modal.open{display:flex;}
-.modal-content{background:#111;padding:20px;border-radius:8px;max-width:600px;width:90%;position:relative;}
-.modal-close{position:absolute;top:10px;right:14px;cursor:pointer;color:#fff;font-size:18px;}
-.download-box{margin-top:16px;padding:14px;background:rgba(255,255,255,0.05);border-radius:6px;display:none;}
-</style>
+    <meta charset="UTF-8">
+    <title>Trading Terminal & Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="neural.css">
 </head>
 <body>
+    <!-- Навигация -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo-container">
+                <div class="logo-svg"></div>
+                <span class="logo-text">Neural</span>
+            </a>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span><span></span><span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<h1>Trading Terminal</h1>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="glitch" data-text="Neural Terminal">Neural Terminal</h1>
+            <p class="subtitle">Trading & Portfolio Demo</p>
+        </div>
+        <canvas id="neural-bg"></canvas>
+    </section>
 
-<div>
-  <div>
-    <h3>Windows $35</h3>
-    <a class="buy-control" data-product="product1">Buy</a>
-  </div>
-  <div>
-    <h3>Linux $35</h3>
-    <a class="buy-control" data-product="product2">Buy</a>
-  </div>
-  <div>
-    <h3>Mac $35</h3>
-    <a class="buy-control" data-product="product3">Buy</a>
-  </div>
-</div>
+    <!-- Products Section -->
+    <section id="products">
+        <h2 class="section-title">Products</h2>
+        <div id="message"></div>
+        <button class="buyBtn" data-product="product1">Buy Product 1</button>
+        <button class="buyBtn" data-product="product2">Buy Product 2</button>
+        <button class="buyBtn" data-product="product3">Buy Product 3</button>
+    </section>
 
-<div class="download-box" id="downloadBox">
-  <p id="downloadMessage">Your download link:</p>
-  <a id="downloadUrl" href="#" target="_blank" rel="noopener"></a>
-</div>
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2 class="section-title">Portfolio</h2>
+        <!-- Тут можно добавить карточки портфолио -->
+    </section>
 
-<div class="modal" id="checkoutModal">
-  <div class="modal-content">
-    <span class="modal-close" id="closeModal">&times;</span>
-    <p id="modalStatus">Preparing checkout...</p>
-    <iframe id="checkoutIframe" src="" style="width:100%;height:500px;border:0;"></iframe>
-  </div>
-</div>
+    <!-- Контакт -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email">
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Message"></textarea>
+            </div>
+            <button class="neural-btn">Send</button>
+        </form>
+    </section>
 
-<script>
-const SERVER_URL = 'https://trading-assistant-v6q5.onrender.com';
-const buyButtons = document.querySelectorAll('.buy-control');
-const checkoutModal = document.getElementById('checkoutModal');
-const checkoutIframe = document.getElementById('checkoutIframe');
-const closeModalBtn = document.getElementById('closeModal');
-const modalStatus = document.getElementById('modalStatus');
-const downloadBox = document.getElementById('downloadBox');
-const downloadUrl = document.getElementById('downloadUrl');
-const downloadMessage = document.getElementById('downloadMessage');
+    <footer>
+        <div class="footer-bottom">&copy; 2025 Neural Portfolio</div>
+    </footer>
 
-let pollIntervalId = null;
-let pollingRunning = false;
-let currentProduct = null;
-
-closeModalBtn.addEventListener('click', () => { closeCheckoutModal(); });
-checkoutModal.addEventListener('click', (e) => { if(e.target===checkoutModal) closeCheckoutModal(); });
-
-function openCheckoutModal(url){
-  checkoutIframe.src = url;
-  checkoutModal.classList.add('open');
-  modalStatus.textContent = 'Checkout open. Complete payment.';
-}
-function closeCheckoutModal(){
-  checkoutModal.classList.remove('open');
-  checkoutIframe.src = 'about:blank';
-  stopPolling();
-}
-
-function startPolling(product){
-  stopPolling();
-  currentProduct = product;
-  pollingRunning = true;
-  pollIntervalId = setInterval(async()=>{
-    try{
-      const resp = await fetch(`${SERVER_URL}/download/${encodeURIComponent(product)}`);
-      if(!resp.ok) return;
-      const data = await resp.json();
-      if(data && data.fileUrl){
-        showDownloadLink(data.fileUrl);
-        stopPolling();
-        closeCheckoutModal();
-      }
-    }catch(err){ console.warn('Polling error:',err);}
-  }, 3000);
-
-  // Таймаут 20 минут
-  setTimeout(()=>{
-    if(pollingRunning){
-      stopPolling();
-      modalStatus.textContent = 'Timeout: download not available. Contact support.';
-    }
-  }, 20*60*1000);
-}
-
-function stopPolling(){ if(pollIntervalId) clearInterval(pollIntervalId); pollIntervalId=null; pollingRunning=false; }
-
-function showDownloadLink(url){
-  downloadUrl.href = url;
-  downloadUrl.textContent = url;
-  downloadBox.style.display = 'block';
-  downloadMessage.textContent = 'Your download link (one-time use)';
-}
-
-async function createCheckoutAndOpen(product){
-  try{
-    modalStatus.textContent='Creating checkout...';
-    const res = await fetch(`${SERVER_URL}/create-checkout`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({product})
-    });
-    if(!res.ok){ modalStatus.textContent='Failed to create checkout'; return; }
-    const data = await res.json();
-    if(!data || !data.checkoutUrl){ modalStatus.textContent='Invalid server response'; return; }
-    openCheckoutModal(data.checkoutUrl);
-    startPolling(product);
-  }catch(err){
-    console.error(err);
-    modalStatus.textContent='Error creating checkout';
-  }
-}
-
-buyButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const product = btn.getAttribute('data-product');
-    downloadBox.style.display='none';
-    downloadUrl.href='#';
-    downloadUrl.textContent='';
-    createCheckoutAndOpen(product);
-  });
-});
-</script>
-
+    <script src="portfolio.js"></script>
+    <script src="buy.js"></script>
 </body>
 </html>
