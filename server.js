@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fetch = require('node-fetch'); // чтобы fetch работал в Node
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -10,13 +11,18 @@ const PORT = process.env.PORT || 10000;
 const COINBASE_API_KEY = process.env.COINBASE_API_KEY;
 const COINBASE_API_URL = 'https://api.commerce.coinbase.com/charges';
 
-app.use(cors());
+// CORS (разрешаем фронт с GitHub Pages)
+app.use(cors({
+  origin: 'https://terminal-trade.github.io',
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// Загружаем все ссылки на продукты
-let rawData = fs.readFileSync(path.join(__dirname, 'products.json'));
-let productLinks = JSON.parse(rawData);
+// Загружаем список продуктов
+const productsPath = path.join(__dirname, 'products.json');
+let productLinks = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));
 
 // Отслеживаем выданные ссылки
 let soldFiles = {};
@@ -80,8 +86,9 @@ app.post('/webhook', (req, res) => {
 // Endpoint выдачи ссылки после оплаты
 app.get('/download/:product', (req, res) => {
   const product = req.params.product;
-  const available = productLinks[product].filter(link => !soldFiles[product].includes(link));
+  if (!productLinks[product]) return res.json({ fileUrl: null });
 
+  const available = productLinks[product].filter(link => !soldFiles[product].includes(link));
   if (!available || available.length === 0) return res.json({ fileUrl: null });
 
   const fileUrl = available[0];
