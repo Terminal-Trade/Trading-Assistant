@@ -8,158 +8,155 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
 <link href="tooplate-neural-style.css" rel="stylesheet">
-
 <style>
-/* Loader overlay */
+/* Лоадер */
 .loader-overlay {
-  display: none;
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.75);
-  color: #fff;
-  font-size: 1.2rem;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 10000;
-  text-align: center;
+    position: fixed;
+    top:0; left:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
 }
-
-/* Canvas on background */
-#neural-bg {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  z-index:-1;
+.loader-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #00ffff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
 }
-.stat-card-link {
-  cursor: pointer;
-}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.stat-card-link { cursor: pointer; }
 </style>
-
 </head>
 <body>
-<canvas id="neural-bg"></canvas>
+<canvas id="neural-bg" style="z-index:-1; position:fixed;"></canvas>
 
+<!-- Лоадер -->
 <div class="loader-overlay" id="loader">
-  <div>Processing your payment...</div>
-  <div>Please wait while we complete the transaction.</div>
+    <div class="loader-spinner"></div>
+    <div>Please wait while we process your order...</div>
 </div>
 
 <nav id="navbar">
-  <div class="nav-container">
-    <a href="#home" class="logo-container">
-      <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Logo content -->
-      </svg>
-      <span class="logo-text">TT</span>
-    </a>
-    <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
-    <div class="nav-menu" id="nav-menu">
-      <ul>
-        <li><a href="#home">HOME</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#projects">ADVANTAGES</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-      </ul>
+    <div class="nav-container">
+        <a href="#home" class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Logo nodes and lines here -->
+            </svg>
+            <span class="logo-text">TT</span>
+        </a>
+        <div class="mobile-menu-toggle" id="mobile-toggle"><span></span><span></span><span></span></div>
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#projects">ADVANTAGES</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
 <section id="home" class="hero">
-  <div class="hero-content">
+<div class="hero-content">
     <h1 class="glitch" data-text="TRADING TERMINAL">TRADING TERMINAL</h1>
-    <p class="subtitle">Your Trading Terminal isn’t just a tool—it’s a silent strategist.</p>
+    <p class="subtitle">Your Trading Terminal isn’t just a tool—it’s a silent strategist. It filters market noise and highlights real signals.</p>
     <div class="hero-video-wrapper" style="text-align:center; margin-top:50px;">
-      <iframe width="720" height="405" class="hero-video"
-        src="https://www.youtube.com/embed/4Cfp5ZoaNZc?autoplay=0&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&mute=0"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
+        <iframe width="720" height="405" class="hero-video" src="https://www.youtube.com/embed/4Cfp5ZoaNZc" frameborder="0" allowfullscreen></iframe>
     </div>
-  </div>
-  <a href="#about" class="scroll-btn">
-    <div class="scroll-btn-inner">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-      </svg>
-    </div>
-  </a>
+</div>
+<a href="#about" class="scroll-btn"><div class="scroll-btn-inner">↓</div></a>
 </section>
 
 <section id="about" class="fade-in">
-  <h2 class="section-title">ABOUT THE PRODUCT</h2>
-  <div class="about-container">
+<h2 class="section-title">ABOUT THE PRODUCT</h2>
+<div class="about-container">
     <div class="about-image"><div class="profile-img-wrapper"><div class="profile-img"><span>♛</span></div></div></div>
     <div class="about-content">
-      <h3>Trading Terminal Overview</h3>
-      <p style="font-size: 1.1rem; line-height: 1.8;">Our trading terminal is a next-generation platform designed to give traders deep insights...</p>
-      <div class="about-stats">
-        <div class="stat-card">
-          <div class="stat-card-link" data-price="$35" data-label="Lifetime License">BUY $35</div>
+        <h3>Trading Terminal Overview</h3>
+        <p>Our trading terminal is a next-generation platform designed to give traders deep insights into the market with clarity and precision.</p>
+        <div class="about-stats">
+            <div class="stat-card">
+                <div class="stat-card-link" data-price="$35" data-text="Lifetime license">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">$35</div>
+                    <div class="stat-label">Lifetime license</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-link" data-price="5+" data-text="Years Exp">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Years Exp</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-link" data-price="30+" data-text="Clients">
+                    <div class="stat-label">BUY</div>
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+            </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-card-link" data-price="5+" data-label="Years Exp">BUY 5+ Years Exp</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-link" data-price="30+" data-label="Clients">BUY 30+ Clients</div>
-        </div>
-      </div>
+        <div id="payment-result" style="margin-top:20px; color:#0f0;"></div>
     </div>
-  </div>
+</div>
 </section>
 
 <section id="projects" class="fade-in">
-  <h2 class="section-title">ADVANTAGES</h2>
-  <div class="projects-grid">
-    <!-- Cards -->
-  </div>
+<h2 class="section-title">ADVANTAGES</h2>
+<div class="projects-grid">
+    <!-- project cards here -->
+</div>
 </section>
 
 <section id="contact" class="fade-in">
-  <h2 class="section-title">CONTACT</h2>
-  <form class="contact-form glass-card">
-    <div class="form-group"><input type="text" placeholder="Your Name" required></div>
-    <div class="form-group"><input type="email" placeholder="Your Email" required></div>
-    <div class="form-group"><textarea rows="5" placeholder="Your Message" required></textarea></div>
+<h2 class="section-title">CONTACT</h2>
+<form class="contact-form glass-card">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <textarea rows="5" placeholder="Your Message" required></textarea>
     <button type="submit" class="neural-btn">SEND MESSAGE</button>
-  </form>
+</form>
 </section>
 
 <footer>
-  <div class="footer-content">
-    <div class="footer-section">
-      <h3>Navigation</h3>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Advantages</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Navigation</h3>
+            <ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Advantages</a></li><li><a href="#contact">Contact</a></li></ul>
+        </div>
     </div>
-  </div>
 </footer>
 
 <script>
-// Пинг + лоадер
 const loader = document.getElementById('loader');
+const paymentResult = document.getElementById('payment-result');
 document.querySelectorAll('.stat-card-link').forEach(card => {
-  card.addEventListener('click', () => {
-    loader.style.display = 'flex';
-    
-    // Симуляция «пинга» и успешной оплаты
-    let attempts = 0;
-    const interval = setInterval(() => {
-      attempts++;
-      console.log('Pinging server...', attempts);
-      // Симулируем ответ через 3 секунды
-      if (attempts >= 3) {
-        clearInterval(interval);
-        loader.innerHTML = `<div>Payment successful!</div>
-                            <div><a href="https://example.com" target="_blank">Click here to access</a></div>`;
-      }
-    }, 1000);
-  });
+    card.addEventListener('click', () => {
+        loader.style.display = 'flex';
+        paymentResult.innerHTML = '';
+        // симуляция пинга/оплаты
+        let pingCount = 0;
+        const pingInterval = setInterval(() => {
+            pingCount++;
+            console.log('Pinging payment status...', pingCount);
+            if (pingCount >= 3) { // через 3 "пинга" считаем успешной
+                clearInterval(pingInterval);
+                loader.style.display = 'none';
+                paymentResult.innerHTML = `Payment successful! Here is your access: <a href="https://example.com/download" target="_blank">Download</a>`;
+            }
+        }, 1000);
+    });
 });
 </script>
 
