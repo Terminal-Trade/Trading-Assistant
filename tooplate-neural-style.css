@@ -637,6 +637,38 @@ https://www.tooplate.com/view/2139-neural-portfolio
             100% { transform: rotate(45deg) translateY(100%); opacity: 0; }
         }
 
+        .buyBtn {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .buyBtn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 130%; /* над кнопкой */
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f0f0f;
+            color: #FF3697;
+            padding: 6px 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            text-shadow: 0 0 8px #FF3697;
+            border: 1px solid #FF3697;
+            box-shadow: 0 0 10px #FF3697, 0 0 20px #FF3697 inset;
+            z-index: 10;
+        }
+
+        .buyBtn:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
         /* Skills */
         .skills-container {
             display: flex;
