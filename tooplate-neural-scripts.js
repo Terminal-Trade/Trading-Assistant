@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     /* Neural Portfolio Scripts */
 
+    // Звуки при наведении на кнопки
+    document.querySelectorAll('.buyBtn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            const sound = new Audio('sounds/click.wav');
+            sound.volume = 0.2;
+            sound.play();
+        });
+    });
+
     // Mobile menu toggle
     const mobileToggle = document.getElementById('mobile-toggle');
     const navMenu = document.getElementById('nav-menu');
