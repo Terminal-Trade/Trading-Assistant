@@ -129,21 +129,21 @@ https://www.tooplate.com/view/2139-neural-portfolio
 		
 		.hero-video-wrapper {
             display: inline-block;
-            padding: 10px; /* отступ между видео и свечением */
+            padding: 12px; /* отступ между видео и свечением */
             border-radius: 12px; /* скругления */
-            background: rgba(0, 255, 255, 0.05); /* легкий цвет фона */
+            background: rgba(0, 255, 255, 0.08); /* легкий цвет фона */
             box-shadow: 
-            0 0 5px #00ffff,
-            0 0 10px #00ffff,
-            0 0 15px #ff00ff;
+            0 0 8px #00ffff,
+            0 0 16px #00ffff,
+            0 0 22px #ff00ff;
             transition: box-shadow 0.3s ease-in-out;
         }
 
         .hero-video-wrapper:hover {
             box-shadow: 
-            0 0 7px #00ffff,
-            0 0 14px #00ffff,
-            0 0 20px #ff00ff;
+            0 0 10px #00ffff,
+            0 0 20px #00ffff,
+            0 0 28px #ff00ff;
         }
 
         /* Menu decorative lines */
