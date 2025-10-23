@@ -226,12 +226,12 @@
     <script src="tooplate-neural-scripts.js"></script>
     <script src="buy.js"></script>
 <script>
-  const SERVER_URL = "https://tradingterminal.online/"; // your backend endpoint
+  const SERVER_URL = "https://tradingterminal.online/"; // your Render app URL
   const TIMEOUT = 10000;
   const RETRY_INTERVAL = 15000;
   const KEEP_ALIVE_INTERVAL = 10 * 60 * 1000;
 
-  // === create floating status box ===
+  // create status box
   const statusBox = document.createElement("div");
   Object.assign(statusBox.style, {
     position: "fixed",
@@ -251,7 +251,7 @@
   document.body.appendChild(statusBox);
 
   function updateStatus(state, text) {
-    requestAnimationFrame(() => { // <— принудительное обновление DOM
+    requestAnimationFrame(() => {
       statusBox.textContent = text;
       if (state === "awake") {
         statusBox.style.background = "#2ecc71";
@@ -269,7 +269,7 @@
     });
   }
 
-  // === ping with timeout ===
+  // simplified ping: if fetch resolves => success
   function pingServer(timeout = TIMEOUT) {
     return new Promise((resolve) => {
       let done = false;
@@ -280,12 +280,13 @@
         }
       }, timeout);
 
-      fetch(SERVER_URL, { cache: "no-store" })
-        .then(res => {
+      // no-cors to bypass CORS block; success means server responded at all
+      fetch(SERVER_URL, { mode: "no-cors", cache: "no-store" })
+        .then(() => {
           if (!done) {
             done = true;
             clearTimeout(timer);
-            resolve(res.ok || res.status < 400); // handle redirects as ok
+            resolve(true); // any response means "awake"
           }
         })
         .catch(() => {
@@ -298,17 +299,16 @@
     });
   }
 
-  // === main wake-up logic ===
   async function wakeRenderServer() {
     console.log(`[${new Date().toLocaleTimeString()}] Initial ping...`);
     updateStatus("pinging", "Pinging server...");
 
     let alive = await pingServer();
-
     let tries = 0;
+
     while (!alive && tries < 20) {
       tries++;
-      console.log(`[${new Date().toLocaleTimeString()}] Sleeping, retry #${tries}`);
+      console.log(`[${new Date().toLocaleTimeString()}] Server sleeping, retry #${tries}`);
       updateStatus("sleeping", `Server sleeping... retrying (${tries})`);
       await new Promise(r => setTimeout(r, RETRY_INTERVAL));
       updateStatus("pinging", "Pinging again...");
@@ -319,7 +319,7 @@
       console.log(`[${new Date().toLocaleTimeString()}] Server is awake ✅`);
       updateStatus("awake", "Server is awake ✅");
 
-      // keep alive ping
+      // repeat later to keep alive
       setTimeout(() => {
         updateStatus("pinging", "Keeping server awake...");
         wakeRenderServer();
