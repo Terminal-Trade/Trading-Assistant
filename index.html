@@ -226,31 +226,68 @@
     <script src="tooplate-neural-scripts.js"></script>
     <script src="buy.js"></script>
 <script>
-  const serverUrl = "https://tradingterminal.online/_health";
+  // === Settings ===
+  const SERVER_URL = "https://tradingterminal.online/";
+  const TIMEOUT = 10000;           // 10s fetch timeout
+  const RETRY_INTERVAL = 15000;    // retry after 15s if failed
+  const KEEP_ALIVE_INTERVAL = 10 * 60 * 1000; // 10 minutes between pings
 
-  function fetchServer(timeout = 10000) {
+  // === Create small status indicator ===
+  const statusBox = document.createElement("div");
+  statusBox.id = "server-status";
+  Object.assign(statusBox.style, {
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    background: "rgba(0,0,0,0.75)",
+    color: "#fff",
+    padding: "10px 16px",
+    borderRadius: "12px",
+    fontFamily: "monospace",
+    fontSize: "14px",
+    zIndex: "9999",
+    boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+    transition: "background 0.3s ease, color 0.3s ease"
+  });
+  statusBox.textContent = "Checking server...";
+  document.body.appendChild(statusBox);
+
+  // === Helper to update visual status ===
+  function updateStatus(state, text) {
+    statusBox.textContent = text;
+    if (state === "awake") statusBox.style.background = "#2ecc71";
+    else if (state === "sleeping") statusBox.style.background = "#e74c3c";
+    else if (state === "pinging") {
+      statusBox.style.background = "#f1c40f";
+      statusBox.style.color = "#000";
+    } else {
+      statusBox.style.background = "rgba(0,0,0,0.75)";
+      statusBox.style.color = "#fff";
+    }
+  }
+
+  // === Ping server with timeout ===
+  function pingServer(timeout = TIMEOUT) {
     return new Promise((resolve) => {
-      let finished = false;
-
-      // Таймаут на ожидание ответа
+      let done = false;
       const timer = setTimeout(() => {
-        if (!finished) {
-          finished = true;
+        if (!done) {
+          done = true;
           resolve(false);
         }
       }, timeout);
 
-      fetch(serverUrl)
-        .then(response => {
-          if (!finished) {
-            finished = true;
+      fetch(SERVER_URL, { cache: "no-store" })
+        .then(res => {
+          if (!done) {
+            done = true;
             clearTimeout(timer);
-            resolve(response.ok);
+            resolve(res.ok);
           }
         })
         .catch(() => {
-          if (!finished) {
-            finished = true;
+          if (!done) {
+            done = true;
             clearTimeout(timer);
             resolve(false);
           }
@@ -258,34 +295,29 @@
     });
   }
 
-  async function wakeServerLoop() {
-    console.log("Первый запрос сразу");
-    let ok = await fetchServer(10000); // ждем 10 секунд
-    if (ok) {
-      console.log("Сервер проснулся ✅, ставим таймер на 10 минут");
-      setTimeout(() => {
-        console.log("10 минут прошли, можно при необходимости повторить пинг");
-      }, 10 * 60 * 1000);
-      return;
+  // === Main wake-up loop ===
+  async function wakeRenderServer() {
+    console.log(`[${new Date().toLocaleTimeString()}] Initial ping...`);
+    updateStatus("pinging", "Pinging server...");
+
+    let alive = await pingServer();
+
+    while (!alive) {
+      console.log(`[${new Date().toLocaleTimeString()}] Server is sleeping, retrying in ${RETRY_INTERVAL / 1000}s...`);
+      updateStatus("sleeping", "Server sleeping... retrying");
+      await new Promise(r => setTimeout(r, RETRY_INTERVAL));
+      updateStatus("pinging", "Pinging again...");
+      alive = await pingServer();
     }
 
-    console.log("Не получил OK, ждем ещё 10 секунд для второго запроса");
-    await new Promise(r => setTimeout(r, 10000));
+    console.log(`[${new Date().toLocaleTimeString()}] Server is awake! Next ping in ${KEEP_ALIVE_INTERVAL / 60000} min`);
+    updateStatus("awake", "Server is awake ✅");
 
-    ok = await fetchServer(15000); // ждем 15 секунд
-    while (!ok) {
-      console.log("Сервер всё ещё не проснулся, повторный запрос через 15 секунд...");
-      await new Promise(r => setTimeout(r, 15000));
-      ok = await fetchServer(15000);
-    }
-
-    console.log("Сервер проснулся ✅, ставим таймер на 10 минут");
-    setTimeout(() => {
-      console.log("10 минут прошли, можно при необходимости повторить пинг");
-    }, 10 * 60 * 1000);
+    setTimeout(wakeRenderServer, KEEP_ALIVE_INTERVAL);
   }
 
-  wakeServerLoop();
+  // === Start immediately when page loads ===
+  document.addEventListener("DOMContentLoaded", wakeRenderServer);
 </script>
 
 </body>
