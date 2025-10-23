@@ -231,7 +231,7 @@
   const RETRY_INTERVAL = 15000;
   const KEEP_ALIVE_INTERVAL = 10 * 60 * 1000;
 
-  // Create small floating status box
+  // === create floating status box ===
   const statusBox = document.createElement("div");
   Object.assign(statusBox.style, {
     position: "fixed",
@@ -251,18 +251,25 @@
   document.body.appendChild(statusBox);
 
   function updateStatus(state, text) {
-    statusBox.textContent = text;
-    if (state === "awake") statusBox.style.background = "#2ecc71";
-    else if (state === "sleeping") statusBox.style.background = "#e74c3c";
-    else if (state === "pinging") {
-      statusBox.style.background = "#f1c40f";
-      statusBox.style.color = "#000";
-    } else {
-      statusBox.style.background = "rgba(0,0,0,0.75)";
-      statusBox.style.color = "#fff";
-    }
+    requestAnimationFrame(() => { // <— принудительное обновление DOM
+      statusBox.textContent = text;
+      if (state === "awake") {
+        statusBox.style.background = "#2ecc71";
+        statusBox.style.color = "#fff";
+      } else if (state === "sleeping") {
+        statusBox.style.background = "#e74c3c";
+        statusBox.style.color = "#fff";
+      } else if (state === "pinging") {
+        statusBox.style.background = "#f1c40f";
+        statusBox.style.color = "#000";
+      } else {
+        statusBox.style.background = "rgba(0,0,0,0.75)";
+        statusBox.style.color = "#fff";
+      }
+    });
   }
 
+  // === ping with timeout ===
   function pingServer(timeout = TIMEOUT) {
     return new Promise((resolve) => {
       let done = false;
@@ -273,13 +280,12 @@
         }
       }, timeout);
 
-      fetch(SERVER_URL, { mode: "no-cors", cache: "no-store" })
+      fetch(SERVER_URL, { cache: "no-store" })
         .then(res => {
-          // if mode is no-cors, res.ok is always false — so just resolve true if fetch succeeded
           if (!done) {
             done = true;
             clearTimeout(timer);
-            resolve(true);
+            resolve(res.ok || res.status < 400); // handle redirects as ok
           }
         })
         .catch(() => {
@@ -292,6 +298,7 @@
     });
   }
 
+  // === main wake-up logic ===
   async function wakeRenderServer() {
     console.log(`[${new Date().toLocaleTimeString()}] Initial ping...`);
     updateStatus("pinging", "Pinging server...");
@@ -299,9 +306,9 @@
     let alive = await pingServer();
 
     let tries = 0;
-    while (!alive && tries < 20) { // max 20 retries
+    while (!alive && tries < 20) {
       tries++;
-      console.log(`[${new Date().toLocaleTimeString()}] Server sleeping, retry #${tries}...`);
+      console.log(`[${new Date().toLocaleTimeString()}] Sleeping, retry #${tries}`);
       updateStatus("sleeping", `Server sleeping... retrying (${tries})`);
       await new Promise(r => setTimeout(r, RETRY_INTERVAL));
       updateStatus("pinging", "Pinging again...");
@@ -309,11 +316,16 @@
     }
 
     if (alive) {
-      console.log(`[${new Date().toLocaleTimeString()}] Server is awake!`);
+      console.log(`[${new Date().toLocaleTimeString()}] Server is awake ✅`);
       updateStatus("awake", "Server is awake ✅");
-      setTimeout(wakeRenderServer, KEEP_ALIVE_INTERVAL);
+
+      // keep alive ping
+      setTimeout(() => {
+        updateStatus("pinging", "Keeping server awake...");
+        wakeRenderServer();
+      }, KEEP_ALIVE_INTERVAL);
     } else {
-      console.warn("Server didn't wake after multiple tries.");
+      console.warn("Server did not respond after multiple tries ❌");
       updateStatus("sleeping", "Server unreachable ❌");
     }
   }
