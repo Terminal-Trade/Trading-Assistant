@@ -2,117 +2,104 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>📦 TerminalPro — локальная/хостинг-загрузка</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>📦 TerminalPro Downloader</title>
 <style>
-body{font-family:"Segoe UI",Arial,sans-serif;background:#1e1e1e;color:#eee;margin:0;padding:40px;}
-#box{max-width:720px;margin:auto;background:#2b2b2b;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
-h1{margin:0 0 8px 0;text-align:center}
-p{margin:6px 0 16px 0;color:#bbb}
-button{width:100%;margin-top:10px;padding:12px 14px;border:0;border-radius:8px;background:#0078d7;color:#fff;font-size:15px;cursor:pointer}
-button:hover{background:#0062ad}
-#progress{margin-top:14px;height:18px;background:#333;border-radius:999px;overflow:hidden;display:none}
-#bar{height:100%;width:0;background:linear-gradient(90deg,#0078d7,#00d4ff)}
-#log{margin-top:14px;font-family:ui-monospace,Consolas,monospace;background:#111;color:#0f0;padding:10px;border-radius:8px;height:240px;overflow:auto;white-space:pre-line}
-.warn{color:#ffcc66}.err{color:#ff6b6b}.ok{color:#7CFC00}
-#choose{background:#444}
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(160deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#container {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+}
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+p {
+  color: #ccc;
+  margin-top: 0;
+  font-size: 0.95em;
+}
+button, a.download {
+  display: inline-block;
+  background: #0078d7;
+  color: #fff;
+  padding: 12px 22px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+}
+button:hover, a.download:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+#status {
+  margin-top: 20px;
+  font-family: monospace;
+  color: #9fdf9f;
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 10px;
+  display: none;
+}
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: #888;
+  font-size: 0.8em;
+}
 </style>
 </head>
 <body>
-<div id="box">
-  <h1>📦 TerminalPro Downloader</h1>
-  <p>Файл <b>TerminalPro.zip</b> должен лежать в той же папке, что и эта страница.</p>
 
-  <button id="choose">📂 Выбрать папку сохранения (Chromium)</button>
-  <button id="download">⬇️ Скачать TerminalPro.zip</button>
+<div id="container">
+  <h1>📦 TerminalPro</h1>
+  <p>Нажми кнопку ниже, чтобы скачать последнюю версию архива с GitHub Releases.</p>
 
-  <div id="progress"><div id="bar"></div></div>
-  <div id="log"></div>
+  <a id="downloadBtn" class="download"
+     href="https://github.com/Amir-07/stake/releases/download/terminal/TerminalPro.zip"
+     download>
+     ⬇️ Скачать TerminalPro.zip
+  </a>
+
+  <div id="status">⏳ Подготовка к загрузке...</div>
 </div>
 
+<footer>© 2025 TerminalPro • GitHub Releases Downloader</footer>
+
 <script>
-let dirHandle=null;
-// Относительный путь к файлу рядом со страницей
-const zipUrl = new URL('./TerminalPro.zip', location.href).href;
-
-const el = id => document.getElementById(id);
-const log = (msg, cls='') => {
-  const box = el('log');
-  box.innerHTML += (cls?`<span class="${cls}">`:'') + msg + (cls?'</span>':'') + '\n';
-  box.scrollTop = box.scrollHeight;
-};
-
-el('choose').onclick = async () => {
-  if (!('showDirectoryPicker' in window)) {
-    log('⚠️ Выбор папки недоступен в этом браузере. Откройте в Chrome/Edge.', 'warn');
-    return;
-  }
-  try {
-    dirHandle = await window.showDirectoryPicker();
-    log('📂 Папка выбрана: ' + dirHandle.name);
-  } catch(e) {
-    if (e.name!=='AbortError') log('❌ Не удалось выбрать папку: ' + e.message, 'err');
-  }
-};
-
-el('download').onclick = async () => {
-  // Если страница открыта локально (file://) — используем прямую ссылку (без fetch, CORS не мешает)
-  if (location.protocol === 'file:') {
-    const a = document.createElement('a');
-    a.href = zipUrl;          // file:///…/TerminalPro.zip
-    a.download = 'TerminalPro.zip';
-    document.body.appendChild(a); a.click(); a.remove();
-    log('✅ Открыта системная загрузка файла (локальный режим).', 'ok');
-    return;
-  }
-  // Если по http(s) — пробуем fetch с прогрессом
-  await downloadWithFetch(zipUrl, 'TerminalPro.zip');
-};
-
-async function downloadWithFetch(url, name) {
-  el('progress').style.display='block'; el('bar').style.width='0%';
-  log('🔗 Загрузка: ' + name);
-  try {
-    const resp = await fetch(url, { cache: 'no-store' });
-    if (!resp.ok) throw new Error('HTTP '+resp.status);
-    const total = +resp.headers.get('Content-Length') || 0;
-    const reader = resp.body?.getReader ? resp.body.getReader() : null;
-    const chunks = []; let received = 0;
-
-    if (reader) {
-      while (true) {
-        const {done, value} = await reader.read();
-        if (done) break;
-        chunks.push(value); received += value.length;
-        if (total) el('bar').style.width = ((received/total)*100).toFixed(1)+'%';
-      }
-    } else {
-      chunks.push(new Uint8Array(await resp.arrayBuffer()));
-      received = chunks[0].length;
-    }
-
-    const blob = new Blob(chunks);
-    let path = "через диалог «Сохранить как…»";
-    if (dirHandle && dirHandle.createWritable) {
-      const fh = await dirHandle.getFileHandle(name, { create:true });
-      const w = await fh.createWritable(); await w.write(blob); await w.close();
-      path = `${dirHandle.name}/${name}`;
-    } else {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob); a.download = name;
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(a.href);
-    }
-    el('bar').style.width='100%';
-    log('✅ Сохранён → 📁 ' + path, 'ok');
-  } catch (e) {
-    log('❌ Ошибка: ' + e.message, 'err');
-    if (location.hostname.endsWith('.github.io')) {
-      log('ℹ️ Проверь: файл действительно доступен по '+url+' ? (чувствителен к РЕГИСТРУ и пути)', 'warn');
-    }
-  } finally {
-    el('progress').style.display='none';
-  }
-}
+// показать лёгкий статус, чтобы визуально реагировало
+const btn = document.getElementById("downloadBtn");
+const status = document.getElementById("status");
+btn.addEventListener("click", () => {
+  status.style.display = "block";
+  status.textContent = "🔄 Инициализация загрузки...";
+  setTimeout(() => status.textContent = "📥 Загрузка началась — проверь папку Загрузки.");
+  setTimeout(() => status.textContent = "✅ Если загрузка не началась, кликни по кнопке ещё раз.");
+});
 </script>
+
 </body>
 </html>
