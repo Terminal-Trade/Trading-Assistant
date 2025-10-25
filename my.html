@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>📥 TerminalPro — GitHub Downloader</title>
+<style>
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #1e1e1e;
+  color: #eee;
+  margin: 0;
+  padding: 40px;
+}
+#box {
+  max-width: 700px;
+  margin: auto;
+  background: #2b2b2b;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0,0,0,.3);
+}
+h1 { text-align: center; margin-top: 0; }
+button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+button.primary {
+  background: #0078d7;
+  color: #fff;
+  width: 100%;
+}
+button.primary:hover { background: #0062ad; }
+#progress {
+  margin-top: 15px;
+  height: 20px;
+  background: #333;
+  border-radius: 5px;
+  overflow: hidden;
+  display: none;
+}
+#bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg,#0078d7,#00d4ff);
+}
+#log {
+  margin-top: 15px;
+  font-family: monospace;
+  background: #111;
+  color: #0f0;
+  padding: 10px;
+  border-radius: 6px;
+  height: 230px;
+  overflow-y: auto;
+  white-space: pre-line;
+}
+.error { color: #f66; }
+</style>
+</head>
+<body>
+<div id="box">
+  <h1>📦 TerminalPro Downloader</h1>
+  <p>Загрузчик скачает архив с GitHub Releases и покажет путь сохранения:</p>
+  <button id="choose" class="primary">📂 Выбрать папку для сохранения</button>
+  <button id="download" class="primary">⬇️ Скачать TerminalPro.zip</button>
+  <div id="progress"><div id="bar"></div></div>
+  <div id="log"></div>
+</div>
+
+<script>
+let dirHandle = null;
+
+// 🔗 Встроенная ссылка на твой GitHub Release
+const githubZip = "https://github.com/Amir-07/stake/releases/download/terminal/TerminalPro.zip";
+
+const el = id => document.getElementById(id),
+      log = msg => { el("log").innerHTML += msg + "\n"; el("log").scrollTop = el("log").scrollHeight; };
+
+el("choose").onclick = async () => {
+  if (!window.showDirectoryPicker) {
+    log("⚠️ Ваш браузер не поддерживает выбор папки. Откройте страницу в Chrome или Edge.");
+    return;
+  }
+  try {
+    dirHandle = await window.showDirectoryPicker();
+    log(`📂 Папка выбрана: ${dirHandle.name}`);
+  } catch (e) {
+    log("❌ Не удалось выбрать папку.");
+  }
+};
+
+el("download").onclick = async () => {
+  await downloadFile(githubZip);
+};
+
+async function downloadFile(url) {
+  const name = decodeURIComponent(url.split("/").pop() || "file.zip");
+  log(`\n🔗 Загрузка: ${name}`);
+  el("progress").style.display = "block";
+  el("bar").style.width = "0%";
+
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const total = +r.headers.get("Content-Length");
+    const reader = r.body.getReader();
+    let received = 0;
+    const chunks = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      received += value.length;
+      if (total) {
+        el("bar").style.width = ((received / total) * 100).toFixed(1) + "%";
+      }
+    }
+
+    const blob = new Blob(chunks);
+    let path = "через диалог «Сохранить как…»";
+
+    if (dirHandle) {
+      const fileHandle = await dirHandle.getFileHandle(name, { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      path = `${dirHandle.name}/${name}`;
+    } else {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+    }
+
+    el("bar").style.width = "100%";
+    log(`✅ ${name} сохранён → 📁 ${path}`);
+  } catch (e) {
+    log(`❌ ${name}: ${e.message}`);
+  } finally {
+    el("progress").style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
