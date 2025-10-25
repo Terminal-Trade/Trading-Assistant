@@ -2,150 +2,115 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>📥 TerminalPro — GitHub Downloader</title>
+<title>📦 TerminalPro — локальная/хостинг-загрузка</title>
 <style>
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #1e1e1e;
-  color: #eee;
-  margin: 0;
-  padding: 40px;
-}
-#box {
-  max-width: 700px;
-  margin: auto;
-  background: #2b2b2b;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 0 20px rgba(0,0,0,.3);
-}
-h1 { text-align: center; margin-top: 0; }
-button {
-  margin-top: 10px;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
-}
-button.primary {
-  background: #0078d7;
-  color: #fff;
-  width: 100%;
-}
-button.primary:hover { background: #0062ad; }
-#progress {
-  margin-top: 15px;
-  height: 20px;
-  background: #333;
-  border-radius: 5px;
-  overflow: hidden;
-  display: none;
-}
-#bar {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg,#0078d7,#00d4ff);
-}
-#log {
-  margin-top: 15px;
-  font-family: monospace;
-  background: #111;
-  color: #0f0;
-  padding: 10px;
-  border-radius: 6px;
-  height: 230px;
-  overflow-y: auto;
-  white-space: pre-line;
-}
-.error { color: #f66; }
+body{font-family:"Segoe UI",Arial,sans-serif;background:#1e1e1e;color:#eee;margin:0;padding:40px;}
+#box{max-width:720px;margin:auto;background:#2b2b2b;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+h1{margin:0 0 8px 0;text-align:center}
+p{margin:6px 0 16px 0;color:#bbb}
+button{width:100%;margin-top:10px;padding:12px 14px;border:0;border-radius:8px;background:#0078d7;color:#fff;font-size:15px;cursor:pointer}
+button:hover{background:#0062ad}
+#progress{margin-top:14px;height:18px;background:#333;border-radius:999px;overflow:hidden;display:none}
+#bar{height:100%;width:0;background:linear-gradient(90deg,#0078d7,#00d4ff)}
+#log{margin-top:14px;font-family:ui-monospace,Consolas,monospace;background:#111;color:#0f0;padding:10px;border-radius:8px;height:240px;overflow:auto;white-space:pre-line}
+.warn{color:#ffcc66}.err{color:#ff6b6b}.ok{color:#7CFC00}
+#choose{background:#444}
 </style>
 </head>
 <body>
 <div id="box">
   <h1>📦 TerminalPro Downloader</h1>
-  <p>Загрузчик скачает архив с GitHub Releases и покажет путь сохранения:</p>
-  <button id="choose" class="primary">📂 Выбрать папку для сохранения</button>
-  <button id="download" class="primary">⬇️ Скачать TerminalPro.zip</button>
+  <p>Файл <b>TerminalPro.zip</b> должен лежать в той же папке, что и эта страница.</p>
+
+  <button id="choose">📂 Выбрать папку сохранения (Chromium)</button>
+  <button id="download">⬇️ Скачать TerminalPro.zip</button>
+
   <div id="progress"><div id="bar"></div></div>
   <div id="log"></div>
 </div>
 
 <script>
-let dirHandle = null;
+let dirHandle=null;
+// Относительный путь к файлу рядом со страницей
+const zipUrl = new URL('./TerminalPro.zip', location.href).href;
 
-// 🔗 Встроенная ссылка на твой GitHub Release
-const githubZip = "https://github.com/Terminal-Trade/Trading-Assistant/releases/download/terminal/TerminalPro.zip";
+const el = id => document.getElementById(id);
+const log = (msg, cls='') => {
+  const box = el('log');
+  box.innerHTML += (cls?`<span class="${cls}">`:'') + msg + (cls?'</span>':'') + '\n';
+  box.scrollTop = box.scrollHeight;
+};
 
-const el = id => document.getElementById(id),
-      log = msg => { el("log").innerHTML += msg + "\n"; el("log").scrollTop = el("log").scrollHeight; };
-
-el("choose").onclick = async () => {
-  if (!window.showDirectoryPicker) {
-    log("⚠️ Ваш браузер не поддерживает выбор папки. Откройте страницу в Chrome или Edge.");
+el('choose').onclick = async () => {
+  if (!('showDirectoryPicker' in window)) {
+    log('⚠️ Выбор папки недоступен в этом браузере. Откройте в Chrome/Edge.', 'warn');
     return;
   }
   try {
     dirHandle = await window.showDirectoryPicker();
-    log(`📂 Папка выбрана: ${dirHandle.name}`);
-  } catch (e) {
-    log("❌ Не удалось выбрать папку.");
+    log('📂 Папка выбрана: ' + dirHandle.name);
+  } catch(e) {
+    if (e.name!=='AbortError') log('❌ Не удалось выбрать папку: ' + e.message, 'err');
   }
 };
 
-el("download").onclick = async () => {
-  await downloadFile(githubZip);
+el('download').onclick = async () => {
+  // Если страница открыта локально (file://) — используем прямую ссылку (без fetch, CORS не мешает)
+  if (location.protocol === 'file:') {
+    const a = document.createElement('a');
+    a.href = zipUrl;          // file:///…/TerminalPro.zip
+    a.download = 'TerminalPro.zip';
+    document.body.appendChild(a); a.click(); a.remove();
+    log('✅ Открыта системная загрузка файла (локальный режим).', 'ok');
+    return;
+  }
+  // Если по http(s) — пробуем fetch с прогрессом
+  await downloadWithFetch(zipUrl, 'TerminalPro.zip');
 };
 
-async function downloadFile(url) {
-  const name = decodeURIComponent(url.split("/").pop() || "file.zip");
-  log(`\n🔗 Загрузка: ${name}`);
-  el("progress").style.display = "block";
-  el("bar").style.width = "0%";
-
+async function downloadWithFetch(url, name) {
+  el('progress').style.display='block'; el('bar').style.width='0%';
+  log('🔗 Загрузка: ' + name);
   try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const total = +r.headers.get("Content-Length");
-    const reader = r.body.getReader();
-    let received = 0;
-    const chunks = [];
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP '+resp.status);
+    const total = +resp.headers.get('Content-Length') || 0;
+    const reader = resp.body?.getReader ? resp.body.getReader() : null;
+    const chunks = []; let received = 0;
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-      received += value.length;
-      if (total) {
-        el("bar").style.width = ((received / total) * 100).toFixed(1) + "%";
+    if (reader) {
+      while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        chunks.push(value); received += value.length;
+        if (total) el('bar').style.width = ((received/total)*100).toFixed(1)+'%';
       }
+    } else {
+      chunks.push(new Uint8Array(await resp.arrayBuffer()));
+      received = chunks[0].length;
     }
 
     const blob = new Blob(chunks);
     let path = "через диалог «Сохранить как…»";
-
-    if (dirHandle) {
-      const fileHandle = await dirHandle.getFileHandle(name, { create: true });
-      const writable = await fileHandle.createWritable();
-      await writable.write(blob);
-      await writable.close();
+    if (dirHandle && dirHandle.createWritable) {
+      const fh = await dirHandle.getFileHandle(name, { create:true });
+      const w = await fh.createWritable(); await w.write(blob); await w.close();
       path = `${dirHandle.name}/${name}`;
     } else {
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(a.href);
     }
-
-    el("bar").style.width = "100%";
-    log(`✅ ${name} сохранён → 📁 ${path}`);
+    el('bar').style.width='100%';
+    log('✅ Сохранён → 📁 ' + path, 'ok');
   } catch (e) {
-    log(`❌ ${name}: ${e.message}`);
+    log('❌ Ошибка: ' + e.message, 'err');
+    if (location.hostname.endsWith('.github.io')) {
+      log('ℹ️ Проверь: файл действительно доступен по '+url+' ? (чувствителен к РЕГИСТРУ и пути)', 'warn');
+    }
   } finally {
-    el("progress").style.display = "none";
+    el('progress').style.display='none';
   }
 }
 </script>
